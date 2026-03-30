@@ -836,17 +836,27 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
           </div>
         </div>
 
-        <!-- Step 9 -->
-        <div class="dd-block">
-          <div class="dd-text">
-            <span class="dd-step">Step 09 — Spellbook & Tooltips</span>
-            <div class="dd-title">Spell Assignment & Rich Tooltips</div>
-            <p class="dd-desc">Clicking an empty action bar slot opens the spellbook popup showing all available spells as icon buttons. Clicking a spell assigns it to that slot and closes the spellbook. Hovering a filled slot shows a rich tooltip: spell name, mana cost, cast time (or "Instant cast"), and a damage description line. Spells have cooldowns, cast times, and trigger buffs/debuffs on the HUD when used.</p>
-          </div>
-          <div class="dd-media-panel">
-            <img src="Images/HUD/Spell_tooltip_popup.png" alt="Spell Tooltip">
+       <!-- Step 9 -->
+      <div class="dd-block">
+        <div class="dd-text">
+          <span class="dd-step">Step 09 — Spellbook & Tooltips</span>
+          <div class="dd-title">Spell Assignment & Rich Tooltips</div>
+          <p class="dd-desc">Clicking an empty action bar slot opens the spellbook popup showing all available spells as icon buttons. Clicking a spell assigns it to that slot and closes the spellbook. Hovering a filled slot shows a rich tooltip: spell name, mana cost, cast time (or "Instant cast"), and a damage description line. Spells have cooldowns, cast times, and trigger buffs/debuffs on the HUD when used.</p>
+          <div class="dd-toggle-group">
+            <button class="dd-toggle-btn active" onclick="setStep9Image('Images/HUD/Spell_tooltip_popup.png', this)">
+              <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
+              Tooltip
+            </button>
+            <button class="dd-toggle-btn" onclick="setStep9Image('Images/HUD/Chose_spellPopup.png', this)">
+              <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
+              Spellbook
+            </button>
           </div>
         </div>
+        <div class="dd-media-panel" id="media-step9">
+          <img id="step9Img" src="Images/HUD/Spell_tooltip_popup.png" alt="Spell Tooltip">
+        </div>
+      </div>
 
       </div><!-- /deep-dive -->
 
@@ -1100,6 +1110,19 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     }
   }
 
+  function setStep9Image(src, btn) {
+  const img = document.getElementById('step9Img');
+  if (img) {
+    img.style.opacity = '0';
+    setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 200);
+  }
+  const group = btn.closest('.dd-toggle-group');
+  if (group) {
+    group.querySelectorAll('.dd-toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+}
+  
 document.getElementById('tileProjects').addEventListener('click', () => {
   const sec = document.getElementById('projectsSection');
   sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
