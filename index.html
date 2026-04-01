@@ -561,13 +561,9 @@
         <p>Every HUD element inherits from a shared Button base class that handles dragging, visibility, camera binding, and input registration — meaning adding a new movable frame takes minimal code. The edit mode uses a grid snap system with a configurable grid size (25–200px), and an element snap system that detects nearby frame edges and snaps to them automatically. The buff/debuff overlap resolver detects collisions between the buff and debuff frames and pushes them apart using the minimum displacement direction — preventing z-fighting and visual overlap without any manual positioning from the player.</p>
       </div>
 
-      <!-- ═══════════════════════════════════════════════════
-           DEVELOPMENT BREAKDOWN — comes FIRST
-           ═══════════════════════════════════════════════════ -->
       <div class="deep-dive">
         <h2>Development Breakdown</h2>
 
-        <!-- Step 1 -->
         <div class="dd-block">
           <div class="dd-text">
             <span class="dd-step">Step 01 — Normal View</span>
@@ -579,7 +575,6 @@
           </div>
         </div>
 
-        <!-- Step 2 -->
         <div class="dd-block reverse">
           <div class="dd-text">
             <span class="dd-step">Step 02 — Edit Mode</span>
@@ -602,7 +597,6 @@
           </div>
         </div>
 
-        <!-- Step 3 -->
         <div class="dd-block">
           <div class="dd-text">
             <span class="dd-step">Step 03 — Advanced Options</span>
@@ -614,7 +608,6 @@
           </div>
         </div>
 
-        <!-- Step 4 -->
         <div class="dd-block reverse">
           <div class="dd-text">
             <span class="dd-step">Step 04 — Button Base Class</span>
@@ -667,7 +660,6 @@
           </div>
         </div>
 
-        <!-- Step 5 -->
         <div class="dd-block">
           <div class="dd-text">
             <span class="dd-step">Step 05 — Child Propagation</span>
@@ -715,7 +707,6 @@
           </div>
         </div>
 
-        <!-- Step 6 -->
         <div class="dd-block reverse">
           <div class="dd-text">
             <span class="dd-step">Step 06 — Drag & Drop</span>
@@ -768,7 +759,6 @@
           </div>
         </div>
 
-        <!-- Step 7 -->
         <div class="dd-block">
           <div class="dd-text">
             <span class="dd-step">Step 07 — Grid Snap</span>
@@ -813,7 +803,6 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
           </div>
         </div>
 
-        <!-- Step 8 -->
         <div class="dd-block reverse">
           <div class="dd-text">
             <span class="dd-step">Step 08 — Action Bar Editor</span>
@@ -836,7 +825,6 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
           </div>
         </div>
 
-        <!-- Step 9 -->
         <div class="dd-block">
           <div class="dd-text">
             <span class="dd-step">Step 09 — Spellbook & Tooltips</span>
@@ -850,9 +838,6 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
 
       </div><!-- /deep-dive -->
 
-      <!-- ═══════════════════════════════════════════════════
-           FEATURE SHOWCASE — comes AFTER Development Breakdown
-           ═══════════════════════════════════════════════════ -->
       <div class="p-section">
         <h2>Feature Showcase</h2>
         <div class="hud-feature-grid">
@@ -873,7 +858,7 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     <footer>&copy; 2026 Alexander Englesson &nbsp;·&nbsp; Game Programmer &nbsp;·&nbsp; Stockholm</footer>
   </div><!-- /hud-screen -->
 
-     <!-- ████████  TOOLS / PARTICLE SCREEN  ████████ -->
+  <!-- ████████  TOOLS / PARTICLE SCREEN  ████████ -->
   <div id="tools-screen">
     <nav id="tools-nav">
       <div class="nav-identity">
@@ -911,146 +896,352 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
 
     <div class="p-body">
       <div class="tools-stats">
-        <div class="tools-stat"><span class="tools-stat-val">Curve-Based</span><span class="tools-stat-label">Editor</span></div>
+        <div class="tools-stat"><span class="tools-stat-val">7</span><span class="tools-stat-label">Spawn Shapes</span></div>
+        <div class="tools-stat"><span class="tools-stat-val">11</span><span class="tools-stat-label">Curve Channels</span></div>
         <div class="tools-stat"><span class="tools-stat-val">C++</span><span class="tools-stat-label">Language</span></div>
-        <div class="tools-stat"><span class="tools-stat-val">TGE</span><span class="tools-stat-label">Engine</span></div>
-        <div class="tools-stat"><span class="tools-stat-val">Live</span><span class="tools-stat-label">Preview</span></div>
-        <div class="tools-stat"><span class="tools-stat-val">Shaders</span><span class="tools-stat-label">Integrated</span></div>
+        <div class="tools-stat"><span class="tools-stat-val">PhysX</span><span class="tools-stat-label">Collision</span></div>
+        <div class="tools-stat"><span class="tools-stat-val">Live</span><span class="tools-stat-label">ImGui Editor</span></div>
       </div>
 
       <div class="p-section">
         <h2>Overview</h2>
         <p>
-          I built a custom particle and VFX editor in C++ inside our engine pipeline, designed to let artists and designers create gameplay effects directly in-engine with immediate visual feedback. The tool supports over-lifetime control of particle behaviour through editable curves, making it possible to shape effects such as smoke, magic trails, bursts, environmental ambience, and boss attacks without hardcoding each effect.
+          I built a full particle and VFX authoring system in C++ integrated directly into our custom engine (TGE). The system covers everything from the data layer — a serialisable <code>ParticleEmitterData</code> struct with 7 spawn shapes, burst emission, sub-emitters, and world collision — through to a live ImGui editor where artists can edit over-lifetime curves for colour (R/G/B/A independently), size, velocity per axis, and rotation, and see results in-engine immediately. Particle parameters flow end-to-end from the editor into the runtime update loop and out through the pixel and vertex shaders.
         </p>
       </div>
 
       <div class="p-section">
         <h2>My Role &amp; Responsibilities</h2>
         <p>
-          I designed and implemented the editor-side workflow as well as the runtime integration. My work included building the particle property UI, supporting curve-driven parameters, previewing effects live in the editor, connecting data to the runtime particle system, and wiring variables into pixel and vertex shaders. I also worked on debug visualisation so it was easy to understand how emitters behaved while tuning them.
+          I designed and implemented the entire system — data architecture, serialisation, runtime particle update, ImGui editor UI, sub-emitter support, PhysX collision integration, and shader wiring. The goal was to make it production-usable: artists and designers could open the editor, tune an effect, and see it running in the scene without touching code or waiting for a rebuild.
         </p>
         <div class="p-chips">
           <span class="chip">C++</span>
-          <span class="chip">Editor Tools</span>
+          <span class="chip">ImGui</span>
           <span class="chip">Particle Systems</span>
           <span class="chip">Curve Editor</span>
+          <span class="chip">JSON Serialisation</span>
+          <span class="chip">Sub-Emitters</span>
+          <span class="chip">PhysX Raycasting</span>
           <span class="chip">Shader Integration</span>
           <span class="chip">VFX Workflow</span>
-          <span class="chip">Runtime Debugging</span>
-          <span class="chip">Custom Engine</span>
+          <span class="chip">Custom Engine (TGE)</span>
         </div>
       </div>
 
       <div class="p-section">
         <h2>Technical Highlights</h2>
         <p>
-          The most important part of the tool was creating a clean path between editor data and runtime behaviour. I built support for over-lifetime curves controlling values such as size, colour, velocity, and rotation, and made sure those values were interpreted consistently both in the editor preview and in-game. I also focused on iteration speed — small changes to emitters could be seen immediately, which made the tool far more useful for real production work.
+          The core design challenge was keeping the editor and runtime in perfect sync. Every over-lifetime curve — colour channels R, G, B, A, size, velocity X/Y/Z, and rotation — is stored as a <code>std::vector&lt;CurveKey&gt;</code> inside <code>ParticleEmitterData</code>, serialised to JSON, and evaluated identically in both the editor preview and the runtime particle update. The entire data structure is wrapped in a <code>CopyOnWriteWrapper</code> so edits in the ImGui panel don't cause unnecessary copies until a value actually changes. World collision is handled by casting a PhysX ray from each particle's previous position to its current one every frame — on hit, a configurable decal TGO is spawned at the contact point and the particle can be set to die immediately or continue.
         </p>
       </div>
 
       <div class="deep-dive">
         <h2>Development Breakdown</h2>
 
-        <div class="dd-block">
-          <div class="dd-text">
-            <span class="dd-step">Step 01 — Foundation</span>
-            <div class="dd-title">Getting One Variable Through the Full Pipeline</div>
-            <p class="dd-desc">
-              I started by getting a single over-lifetime value flowing from the editor UI to the runtime particle update and then into the shader stage. That proved the entire chain worked end-to-end and gave me a solid foundation for all later properties.
-            </p>
-          </div>
-          <div class="dd-media-panel">
-            <img src="Images/Particles/particle_step1.png" alt="Particle foundation">
-          </div>
-        </div>
-
-        <div class="dd-block reverse">
-          <div class="dd-text">
-            <span class="dd-step">Step 02 — Curve Editing</span>
-            <div class="dd-title">Artist-Driven Over-Lifetime Behaviour</div>
-            <p class="dd-desc">
-              I added editable curves so effects could evolve naturally over time. Instead of hand-authoring each effect in code, artists could shape how particles changed from spawn to death by adjusting points directly in the editor.
-            </p>
-          </div>
-          <div class="dd-media-panel">
-            <img src="Images/Particles/particle_step2.png" alt="Curve editor">
+      <!-- Step 01 — First Particle -->
+      <div class="dd-block">
+        <div class="dd-text">
+          <span class="dd-step">Step 01 — First Particle</span>
+          <div class="dd-title">One Particle, End-to-End</div>
+          <p class="dd-desc">
+            Before any systems existed, I proved the full pipeline end-to-end with a single hardcoded particle. The first non-obvious discovery: sprite size must be written directly into mySize on the instance data every frame — transform matrix scale has no effect on sprites. Getting this right on one particle meant everything built after it stood on a correct foundation.
+          </p>
+          <div class="dd-toggle-group">
+            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-1','code',this)">
+              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+              Code
+            </button>
+            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-1','video',this)">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Video
+            </button>
           </div>
         </div>
+      <div class="dd-media-panel show-video" id="ptool-media-1">
+          <video src="Partikel_system_1.mp4" muted loop playsinline></video>
+          <div class="dd-code-view">
+            <div class="dd-code-header">
+              <span class="dd-code-filename">ParticleEmitter.cpp — SpawnParticle(SubEmitter&)</span>
+              <span class="dd-code-lang">C++</span>
+            </div>
+            <pre><code><span class="tok-comment">// Size must go directly into instance data — NOT the transform</span>
+      <span class="tok-kw">float</span> size = <span class="tok-num">1.f</span>;
+      <span class="tok-kw">if</span> (!aEmitter.data.sizeOverLifetime.<span class="tok-fn">empty</span>())
+          size = aEmitter.data.sizeOverLifetime.<span class="tok-fn">front</span>().value;
 
-        <div class="dd-block">
-          <div class="dd-text">
-            <span class="dd-step">Step 03 — Runtime Preview</span>
-            <div class="dd-title">Immediate In-Editor Feedback</div>
-            <p class="dd-desc">
-              The tool supported live preview so changes could be evaluated instantly. That dramatically improved iteration speed and made it much easier to tune values like emission shape, burst feel, lifetime balance, and overall readability.
-            </p>
-          </div>
-          <div class="dd-media-panel">
-            <img src="Images/Particles/particle_step3.png" alt="Live preview">
-          </div>
-        </div>
+      <span class="tok-kw">auto</span> spriteInst = std::<span class="tok-fn">make_shared</span>&lt;Tga::Sprite3DInstanceData&gt;();
+      spriteInst-&gt;mySize = { size, size }; <span class="tok-comment">// ← this is the only way</span>
+      spriteInst-&gt;myColor = { <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span> };
+      spriteInst-&gt;myTransform = t;
 
-        <div class="dd-block reverse">
-          <div class="dd-text">
-            <span class="dd-step">Step 04 — Shader Integration</span>
-            <div class="dd-title">Driving Visual Output from Editor Data</div>
-            <p class="dd-desc">
-              I wired particle parameters into the rendering side so visual properties could be controlled consistently. This made the system useful for both subtle ambience and more gameplay-heavy effects like boss attacks, impact flashes, and magical bursts.
-            </p>
-          </div>
-          <div class="dd-media-panel">
-            <img src="Images/Particles/particle_step4.png" alt="Shader integration">
-          </div>
-        </div>
-
-        <div class="dd-block">
-          <div class="dd-text">
-            <span class="dd-step">Step 05 — Debugging & Production Use</span>
-            <div class="dd-title">A Tool Built for Real Team Iteration</div>
-            <p class="dd-desc">
-              I added debugging support and focused on making the system understandable for others on the team. The goal was not just to make effects render, but to make the workflow usable enough that designers and artists could rely on it during development.
-            </p>
-          </div>
-          <div class="dd-media-panel">
-            <img src="Images/Particles/particle_step5.png" alt="Debug view">
+      <span class="tok-comment">// VFXInstance drives all over-lifetime curves each frame</span>
+      <span class="tok-kw">auto</span> vfx = go-&gt;<span class="tok-fn">AddComponent</span>&lt;VFXInstance&gt;();
+      vfx-&gt;<span class="tok-fn">Init</span>();
+      vfx-&gt;<span class="tok-fn">SetType</span>(VFXType::Sprite);
+      vfx-&gt;<span class="tok-fn">SetShouldLoop</span>(<span class="tok-lit">false</span>);
+      vfx-&gt;<span class="tok-fn">SetLifeTime</span>(aEmitter.data.lifetime);
+      vfx-&gt;<span class="tok-fn">SetTransform</span>(t);
+      vfx-&gt;<span class="tok-fn">SetSpawnedTime</span>(Tga::Engine::<span class="tok-fn">GetInstance</span>()-&gt;<span class="tok-fn">GetTotalTime</span>());</code></pre>
           </div>
         </div>
       </div>
+
+      <!-- Step 02 — Live Editor Preview -->
+      <div class="dd-block reverse">
+        <div class="dd-text">
+          <span class="dd-step">Step 02 — Live Editor Preview</span>
+          <div class="dd-title">Particles Playing Inside the Editor</div>
+          <p class="dd-desc">
+            With one particle working, I integrated live preview into the TGE editor — first in the ObjectDefinitionDocument for single-asset preview, then in the SceneDocument so emitters play at their correct world-space positions. A critical bug I hit early: storing only the VFXInstance shared_ptr lets the owning GameObject go out of scope, leaving an internal pointer dangling and crashing on UpdateTransform(). Storing both together in a PreviewVFXEntry solved it.
+          </p>
+          <div class="dd-toggle-group">
+            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-2','code',this)">
+              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+              Code
+            </button>
+            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-2','video',this)">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Video
+            </button>
+          </div>
+        </div>
+<div class="dd-media-panel show-video" id="ptool-media-2">
+          <video src="Partikel_system_2.mp4" muted loop playsinline></video>
+          <div class="dd-code-view">
+            <div class="dd-code-header">
+              <span class="dd-code-filename">PreviewParticleSystem.h — PreviewVFXEntry</span>
+              <span class="dd-code-lang">C++</span>
+            </div>
+            <pre><code><span class="tok-comment">// Storing ONLY VFXInstance is not enough —</span>
+      <span class="tok-comment">// the GO must stay alive or VFXInstance::myGameObject dangles</span>
+      <span class="tok-kw">struct</span> <span class="tok-type">PreviewVFXEntry</span>
+      {
+          std::shared_ptr&lt;<span class="tok-type">GameObject</span>&gt;  go;      <span class="tok-comment">// keeps GO alive</span>
+          std::shared_ptr&lt;<span class="tok-type">VFXInstance</span>&gt; vfxInst; <span class="tok-comment">// drives curves</span>
+      };
+
+      <span class="tok-comment">// SceneDocument — per-emitter world-space spawn</span>
+      <span class="tok-kw">const</span> Tga::Vector3f emitterWorldPos =
+          sceneObj-&gt;<span class="tok-fn">GetPosition</span>();
+
+      Tga::Vector3f spawnPos =
+          emitterWorldPos + spawnResult.offset;
+
+      <span class="tok-comment">// Each Tag::Particle object gets its own entry</span>
+      <span class="tok-comment">// in three maps: emitter state, particle list, VFX entries</span>
+      myPreviewParticles[id].<span class="tok-fn">push_back</span>(pp);
+      myPreviewEmitters[id]  = emitter;
+      myPreviewVFXInstances[id] = entry;</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 03 — Data Architecture -->
+      <div class="dd-block">
+        <div class="dd-text">
+          <span class="dd-step">Step 03 — Data Architecture</span>
+          <div class="dd-title">ParticleEmitterData — The Foundation of Everything</div>
+          <p class="dd-desc">
+            The entire system is driven by a single ParticleEmitterData struct — spawn shape, rate, burst schedules, gravity, colour ranges, direction spread, collision flags, and sub-emitters. The struct serialises fully to and from JSON, so emitter setups save, reload, and share between scenes without any code changes.
+          </p>
+          <div class="dd-toggle-group">
+            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-3','code',this)">
+              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+              Code
+            </button>
+            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-3','video',this)">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Video
+            </button>
+          </div>
+        </div>
+<div class="dd-media-panel show-video" id="ptool-media-3">
+          <video src="Partikel_system_3.mp4" muted loop playsinline></video>
+          <div class="dd-code-view">
+            <div class="dd-code-header">
+              <span class="dd-code-filename">VFXinfo.h — ParticleEmitterData</span>
+              <span class="dd-code-lang">C++</span>
+            </div>
+            <pre><code><span class="tok-kw">struct</span> <span class="tok-type">ParticleEmitterData</span>
+      {
+          std::string emitterName = <span class="tok-lit">"Emitter 0"</span>;
+          std::vector&lt;<span class="tok-type">ParticleEmitterData</span>&gt; subEmitters; <span class="tok-comment">// child emitters</span>
+
+          Tga::StringId texturePath;
+          <span class="tok-kw">float</span>         lifetime    = <span class="tok-num">1.f</span>;
+          <span class="tok-kw">float</span>         spawnRate   = <span class="tok-num">10.f</span>;
+          <span class="tok-kw">float</span>         gravityScale = <span class="tok-num">0.f</span>;
+          <span class="tok-kw">bool</span>          looping     = <span class="tok-lit">true</span>;
+          <span class="tok-kw">float</span>         warmupTime  = <span class="tok-num">0.f</span>; <span class="tok-comment">// pre-simulate on spawn</span>
+
+          <span class="tok-comment">// 7 spawn shapes — each with shape-specific params</span>
+          <span class="tok-kw">enum class</span> <span class="tok-type">SpawnShape</span> : uint8_t
+              { Point, Sphere, HollowSphere, Cone, Box, Circle, Edge };
+          SpawnShape spawnShape = SpawnShape::Point;
+
+          <span class="tok-comment">// Burst emission — multiple bursts, each with cycles</span>
+          <span class="tok-kw">struct</span> <span class="tok-type">Burst</span> {
+              <span class="tok-kw">float</span> time; <span class="tok-kw">int</span> count; <span class="tok-kw">int</span> cycles; <span class="tok-kw">float</span> interval;
+          };
+          std::vector&lt;<span class="tok-type">Burst</span>&gt; bursts;
+
+          <span class="tok-comment">// Collision — PhysX raycast per particle per frame</span>
+          <span class="tok-kw">bool</span>          collideWithWorld      = <span class="tok-lit">false</span>;
+          <span class="tok-kw">bool</span>          spawnDecalOnCollision = <span class="tok-lit">false</span>;
+          <span class="tok-kw">bool</span>          dieOnCollision        = <span class="tok-lit">true</span>;
+          Tga::StringId collisionTgoName;
+      };</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 04 — Curve System -->
+      <div class="dd-block reverse">
+        <div class="dd-text">
+          <span class="dd-step">Step 04 — Curve System</span>
+          <div class="dd-title">11 Independent Over-Lifetime Channels</div>
+          <p class="dd-desc">
+            Rather than simple min/max scalars, I built 11 independent over-lifetime curve channels: colour R, G, B, A, size, velocity X/Y/Z, and rotation. Velocity curves are baked at spawn time against the particle's initial direction vector — so direction spread and spawn shape interact correctly without recomputing direction every frame.
+          </p>
+          <div class="dd-toggle-group">
+            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-4','code',this)">
+              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+              Code
+            </button>
+            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-4','video',this)">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Video
+            </button>
+          </div>
+        </div>
+<div class="dd-media-panel show-video" id="ptool-media-4">
+          <video src="Partikel_System_5.mp4" muted loop playsinline></video>
+          <div class="dd-code-view">
+            <div class="dd-code-header">
+              <span class="dd-code-filename">ParticleEmitter.cpp — SpawnParticle(SubEmitter&)</span>
+              <span class="dd-code-lang">C++</span>
+            </div>
+            <pre><code><span class="tok-comment">// Velocity baked at spawn — dir is computed once from spawn shape</span>
+      <span class="tok-kw">auto</span> <span class="tok-fn">BuildVelocityCurve</span> = [&amp;](
+          <span class="tok-kw">const</span> std::vector&lt;Tga::CurveKey&gt;&amp; keys,
+          <span class="tok-kw">float</span> dirComponent) -&gt; std::vector&lt;<span class="tok-type">Curve</span>&gt;
+      {
+          <span class="tok-kw">if</span> (!keys.<span class="tok-fn">empty</span>())
+          {
+              std::vector&lt;<span class="tok-type">Curve</span>&gt; out;
+              <span class="tok-kw">for</span> (<span class="tok-kw">auto</span>&amp; k : keys)
+                  out.<span class="tok-fn">push_back</span>({ k.time, k.value * dirComponent });
+              <span class="tok-kw">return</span> out;
+          }
+          <span class="tok-kw">return</span> {};
+      };
+
+      <span class="tok-comment">// dir.x/y/z from CalculateParticleSpawn() — shape-aware</span>
+      <span class="tok-kw">auto</span> velX = <span class="tok-fn">BuildVelocityCurve</span>(data.velocityOverLifetimeX, dir.x);
+      <span class="tok-kw">auto</span> velY = <span class="tok-fn">BuildVelocityCurve</span>(data.velocityOverLifetimeY, dir.y);
+      <span class="tok-kw">auto</span> velZ = <span class="tok-fn">BuildVelocityCurve</span>(data.velocityOverLifetimeZ, dir.z);
+
+      <span class="tok-comment">// Colour: 4 independent channels, each a CurveKey vector</span>
+      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeR</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeR, ...));
+      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeG</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeG, ...));
+      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeB</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeB, ...));
+      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeA</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeA, ...));</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 05 — World Collision & Decals -->
+      <div class="dd-block">
+        <div class="dd-text">
+          <span class="dd-step">Step 05 — World Collision &amp; Decals</span>
+          <div class="dd-title">Per-Particle PhysX Raycasting with Decal Spawning</div>
+          <p class="dd-desc">
+            When collision is enabled, every live particle casts a PhysX ray from its previous position to its current one each frame. On hit, the particle can die immediately or continue — and if Spawn Decal on Collision is enabled, a configurable TGO asset spawns at the exact contact point. Collision TGO name and scale are both exposed in the ImGui editor and serialise with the emitter data.
+          </p>
+          <div class="dd-toggle-group">
+            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-5','code',this)">
+              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+              Code
+            </button>
+            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-5','video',this)">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Video
+            </button>
+          </div>
+        </div>
+<div class="dd-media-panel show-video" id="ptool-media-5">
+          <video src="partikel_system_decal.mp4" muted loop playsinline></video>
+          <div class="dd-code-view">
+            <div class="dd-code-header">
+              <span class="dd-code-filename">ParticleEmitter.cpp — Update()</span>
+              <span class="dd-code-lang">C++</span>
+            </div>
+            <pre><code><span class="tok-comment">// Ray from previous position to current — catches fast-moving particles</span>
+      physx::PxVec3 origin = { prevPos.x, prevPos.y, prevPos.z };
+      physx::PxVec3 delta  = { pos.x - prevPos.x,
+                                pos.y - prevPos.y,
+                                pos.z - prevPos.z };
+      <span class="tok-kw">float</span> dist = <span class="tok-fn">sqrtf</span>(delta.x*delta.x + delta.y*delta.y + delta.z*delta.z);
+
+      <span class="tok-kw">if</span> (dist &gt; <span class="tok-num">0.001f</span>)
+      {
+          physx::PxVec3 dir = { delta.x/dist, delta.y/dist, delta.z/dist };
+          physx::PxRaycastBuffer hit;
+
+          <span class="tok-kw">if</span> (globalCurrentPxScene-&gt;<span class="tok-fn">raycast</span>(origin, dir, dist, hit))
+          {
+              <span class="tok-kw">if</span> (emitter.data.spawnDecalOnCollision)
+              {
+                  Tga::Vector3f hitPos = { hit.block.position.x,
+                                          hit.block.position.y,
+                                          hit.block.position.z };
+                  <span class="tok-comment">// Spawn configurable TGO at exact contact point</span>
+                  GameWorld::<span class="tok-fn">GetInstance</span>().<span class="tok-fn">LoadAssetToScene</span>(
+                      emitter.data.collisionTgoName,
+                      Tga::Matrix4x4f::<span class="tok-fn">CreateFromTranslation</span>(hitPos),
+                      <span class="tok-lit">true</span>);
+              }
+              <span class="tok-kw">if</span> (emitter.data.dieOnCollision)
+                  vfx-&gt;<span class="tok-fn">ForceExpire</span>();
+          }
+      }</code></pre>
+          </div>
+        </div>
+      </div>
+
+   </div><!-- /deep-dive -->
 
       <div class="p-section">
         <h2>Feature Showcase</h2>
         <div class="tools-feature-grid">
-          <div class="tools-feature-tile" onclick="openToolsLightbox('Images/Particles/particle_step1.png')">
-            <img src="Images/Particles/particle_step1.png" alt="Particle Editor">
-            <div class="tools-feature-caption">Editor Foundation</div>
+          <div class="tools-feature-tile" onclick="openToolsLightbox('1.png')">
+            <img src="1.png" alt="First Particle">
+            <div class="tools-feature-caption">First Particle End-to-End</div>
           </div>
-          <div class="tools-feature-tile" onclick="openToolsLightbox('Images/Particles/particle_step2.png')">
-            <img src="Images/Particles/particle_step2.png" alt="Curve Editor">
-            <div class="tools-feature-caption">Curve Editing</div>
+          <div class="tools-feature-tile" onclick="openToolsLightbox('2.png')">
+            <img src="2.png" alt="Live Editor Preview">
+            <div class="tools-feature-caption">Live Editor Preview</div>
           </div>
-          <div class="tools-feature-tile" onclick="openToolsLightbox('Images/Particles/particle_step3.png')">
-            <img src="Images/Particles/particle_step3.png" alt="Preview">
-            <div class="tools-feature-caption">Live Preview</div>
+          <div class="tools-feature-tile" onclick="openToolsLightbox('3.png')">
+            <img src="3.png" alt="Data Architecture">
+            <div class="tools-feature-caption">ParticleEmitterData</div>
           </div>
-          <div class="tools-feature-tile" onclick="openToolsLightbox('Images/Particles/particle_step4.png')">
-            <img src="Images/Particles/particle_step4.png" alt="Shader Integration">
-            <div class="tools-feature-caption">Shader Integration</div>
+          <div class="tools-feature-tile" onclick="openToolsLightbox('4.png')">
+            <img src="4.png" alt="Curve System">
+            <div class="tools-feature-caption">11 Over-Lifetime Channels</div>
           </div>
-          <div class="tools-feature-tile" onclick="openToolsLightbox('Images/Particles/particle_step5.png')">
-            <img src="Images/Particles/particle_step5.png" alt="Debug View">
-            <div class="tools-feature-caption">Debug Visualisation</div>
-          </div>
-          <div class="tools-feature-tile" onclick="openToolsLightbox('Images/Particles/particle_overview.png')">
-            <img src="Images/Particles/particle_overview.png" alt="Full Tool">
-            <div class="tools-feature-caption">Full Tool Overview</div>
+          <div class="tools-feature-tile" onclick="openToolsLightbox('4.png')">
+            <img src="4.png" alt="Collision">
+            <div class="tools-feature-caption">World Collision &amp; Decals</div>
           </div>
         </div>
       </div>
-    </div>
+    </div><!-- /p-body -->
 
     <footer>&copy; 2026 Alexander Englesson &nbsp;·&nbsp; Game Programmer &nbsp;·&nbsp; Stockholm</footer>
-  </div>
+  </div><!-- /tools-screen -->
+
 </div><!-- /viewport -->
 
 <!-- Lightbox -->
@@ -1100,66 +1291,65 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     }
   }
 
-document.getElementById('tileProjects').addEventListener('click', () => {
-  const sec = document.getElementById('projectsSection');
-  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
-  sec.style.marginTop = '3rem';
-  if (sec.style.display === 'block') {
-    setTimeout(() => {
-      const projectsSection = document.getElementById('projects');
-      if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
-  }
-});
+  document.getElementById('tileProjects').addEventListener('click', () => {
+    const sec = document.getElementById('projectsSection');
+    sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+    sec.style.marginTop = '3rem';
+    if (sec.style.display === 'block') {
+      setTimeout(() => {
+        const projectsSection = document.getElementById('projects');
+        if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  });
+
   document.getElementById('tileHud').addEventListener('click', () => {
     viewport.classList.remove('show-project');
     viewport.classList.add('show-hud');
     hudScreen.scrollTop = 0;
   });
+
   document.getElementById('tileTools').addEventListener('click', () => {
-  viewport.classList.remove('show-project', 'show-hud');
-  viewport.classList.add('show-tools');
-  document.getElementById('tools-screen').scrollTop = 0;
-});
+    viewport.classList.remove('show-project', 'show-hud');
+    viewport.classList.add('show-tools');
+    document.getElementById('tools-screen').scrollTop = 0;
+  });
 
-function goBackFromTools(scrollTo) {
-  viewport.classList.remove('show-tools');
-  if (scrollTo) {
-    setTimeout(() => {
-      const el = mainScreen.querySelector('#' + scrollTo);
-      if (el) {
-        const navHeight = document.getElementById('main-nav').offsetHeight;
-        mainScreen.scrollTop = el.offsetTop - navHeight;
-      }
-    }, 560);
-  } else {
-    setTimeout(() => { mainScreen.scrollTop = 0; }, 560);
+  function goBackFromTools(scrollTo) {
+    viewport.classList.remove('show-tools');
+    if (scrollTo) {
+      setTimeout(() => {
+        const el = mainScreen.querySelector('#' + scrollTo);
+        if (el) {
+          const navHeight = document.getElementById('main-nav').offsetHeight;
+          mainScreen.scrollTop = el.offsetTop - navHeight;
+        }
+      }, 560);
+    } else {
+      setTimeout(() => { mainScreen.scrollTop = 0; }, 560);
+    }
   }
-}
 
-document.getElementById('toolsBackBtn').addEventListener('click', () => {
-  goBackFromTools();
-});
-document.getElementById('toolsBackBtnAbout').addEventListener('click', () => {
-  goBackFromTools('about');
-});
-document.getElementById('toolsBackBtnContact').addEventListener('click', () => {
-  goBackFromTools('contact');
-});
+  document.getElementById('toolsBackBtn').addEventListener('click', () => { goBackFromTools(); });
+  document.getElementById('toolsBackBtnAbout').addEventListener('click', () => { goBackFromTools('about'); });
+  document.getElementById('toolsBackBtnContact').addEventListener('click', () => { goBackFromTools('contact'); });
 
-  function goBack(scrollTo) {
-    viewport.classList.remove('show-project');
-    const vid = document.getElementById('pHeroVideo');
-    vid.pause(); vid.src = '';
-    if (scrollTo) setTimeout(() => {
-      const el = mainScreen.querySelector('#' + scrollTo);
-      if (el) {
-        const navHeight = document.getElementById('main-nav').offsetHeight;
-        mainScreen.scrollTop = el.offsetTop - navHeight;
-      }
-    }, 560);
+  function goBackFromHud(scrollTo) {
+    viewport.classList.remove('show-hud');
+    if (scrollTo) {
+      setTimeout(() => {
+        const el = mainScreen.querySelector('#' + scrollTo);
+        if (el) {
+          const navHeight = document.getElementById('main-nav').offsetHeight;
+          mainScreen.scrollTop = el.offsetTop - navHeight;
+        }
+      }, 560);
+    } else {
+      setTimeout(() => { mainScreen.scrollTop = 0; }, 560);
+    }
   }
-document.getElementById('hudBackBtn').addEventListener('click', () => { viewport.classList.remove('show-hud'); setTimeout(() => { mainScreen.scrollTop = 0; }, 560); });
+
+  document.getElementById('hudBackBtn').addEventListener('click', () => { viewport.classList.remove('show-hud'); setTimeout(() => { mainScreen.scrollTop = 0; }, 560); });
   document.getElementById('hudBackBtnAbout').addEventListener('click',  () => goBackFromHud('about'));
   document.getElementById('hudBackBtnContact').addEventListener('click',() => goBackFromHud('contact'));
 
@@ -1232,7 +1422,7 @@ document.getElementById('hudBackBtn').addEventListener('click', () => { viewport
     viewport.classList.add('show-project');
   }
 
- function goBack(scrollTo) {
+  function goBack(scrollTo) {
     viewport.classList.remove('show-project');
     const vid = document.getElementById('pHeroVideo');
     vid.pause(); vid.src = '';
@@ -1245,7 +1435,7 @@ document.getElementById('hudBackBtn').addEventListener('click', () => { viewport
     }, 560);
   }
 
-document.getElementById('backBtn').addEventListener('click', () => { goBack(); setTimeout(() => { mainScreen.scrollTop = 0; }, 560); });
+  document.getElementById('backBtn').addEventListener('click', () => { goBack(); setTimeout(() => { mainScreen.scrollTop = 0; }, 560); });
   document.getElementById('backBtnProjects').addEventListener('click', () => goBack('projects'));
   document.getElementById('backBtnAbout').addEventListener('click',    () => goBack('about'));
   document.getElementById('backBtnContact').addEventListener('click',  () => goBack('contact'));
@@ -1296,17 +1486,15 @@ document.getElementById('backBtn').addEventListener('click', () => { goBack(); s
   });
 
   const TOOLS_SHOTS = [
-  'Images/Particles/particle_step1.png',
-  'Images/Particles/particle_step2.png',
-  'Images/Particles/particle_step3.png',
-  'Images/Particles/particle_step4.png',
-  'Images/Particles/particle_step5.png',
-  'Images/Particles/particle_overview.png'
-];
+    'Images/Particles/particle_step1.png',
+    'Images/Particles/particle_step2.png',
+    'Images/Particles/particle_step3.png',
+    'Images/Particles/particle_step4.png',
+    'Images/Particles/particle_step5.png',
+    'Images/Particles/particle_overview.png'
+  ];
 
-function openToolsLightbox(src) {
-  openLightbox(src, TOOLS_SHOTS);
-}
+  function openToolsLightbox(src) { openLightbox(src, TOOLS_SHOTS); }
 
   const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
@@ -1323,21 +1511,21 @@ function openToolsLightbox(src) {
   }, 5000);
 
   const gameSlides = [
-  'Images/Projekt1/Thumbnail_P1_G4.png',
-  'Images/Projekt2/FROGMENT-THUMBNAIL.png',
-  'Images/Projekt3/3_Mountain_1.png',
-  'Images/Projekt4/CargoDiver Screenshot1.png',
-  'Images/Projekt5/3.png'
-];
-let gameSlideIndex = 0;
-setInterval(() => {
-  gameSlideIndex = (gameSlideIndex + 1) % gameSlides.length;
-  const img = document.getElementById('gameSlideImg');
-  if (img) {
-    img.style.opacity = '0';
-    setTimeout(() => { img.src = gameSlides[gameSlideIndex]; img.style.opacity = '1'; }, 300);
-  }
-}, 3000);
+    'Images/Projekt1/Thumbnail_P1_G4.png',
+    'Images/Projekt2/FROGMENT-THUMBNAIL.png',
+    'Images/Projekt3/3_Mountain_1.png',
+    'Images/Projekt4/CargoDiver Screenshot1.png',
+    'Images/Projekt5/3.png'
+  ];
+  let gameSlideIndex = 0;
+  setInterval(() => {
+    gameSlideIndex = (gameSlideIndex + 1) % gameSlides.length;
+    const img = document.getElementById('gameSlideImg');
+    if (img) {
+      img.style.opacity = '0';
+      setTimeout(() => { img.src = gameSlides[gameSlideIndex]; img.style.opacity = '1'; }, 300);
+    }
+  }, 3000);
 </script>
 </body>
 </html>
