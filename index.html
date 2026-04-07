@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <title>Portfolio — Alexander Englesson</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
@@ -16,6 +16,7 @@
       --accent:      #2563eb;
       --accent-light:#1e2a4a;
       --shadow:      0 2px 16px rgba(37,99,235,0.07);
+      --nav-h:       60px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,285 +24,342 @@
     body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 16px; overflow-x: hidden; }
     html, body { height: 100%; overflow: hidden; }
 
+    /* ── VIEWPORT SLIDE SYSTEM ── */
     #viewport { display: flex; width: 400vw; transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1); will-change: transform; }
     #viewport.show-project  { transform: translateX(-100vw); }
     #viewport.show-hud      { transform: translateX(-200vw); }
     #viewport.show-tools    { transform: translateX(-300vw); }
-    #main-screen, #project-screen, #hud-screen, #tools-screen { width: 100vw; height: 100vh; flex-shrink: 0; overflow-y: auto; overflow-x: hidden; }
+    #main-screen, #project-screen, #hud-screen, #tools-screen {
+      width: 100vw; height: 100vh; flex-shrink: 0; overflow-y: auto; overflow-x: hidden;
+    }
 
-     #main-nav, #project-nav, #hud-nav, #tools-nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.3rem 2.5rem; background: rgba(18, 19, 26, 0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--card-border); }
-    .nav-identity { display: flex; flex-direction: column; gap: 0.2rem; min-width: 280px; }
-    .nav-name { font-size: 1.55rem; font-weight: 700; color: var(--text); letter-spacing: 0.02em; line-height: 1.2; }
-    .nav-title { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.06em; font-weight: 400; }
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; transition: color 0.2s; }
+    /* ── NAV ── */
+    #main-nav, #project-nav, #hud-nav, #tools-nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.2rem; height: var(--nav-h);
+      background: rgba(18, 19, 26, 0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .nav-identity { display: flex; flex-direction: column; gap: 0.1rem; }
+    .nav-name { font-size: 1rem; font-weight: 700; color: var(--text); letter-spacing: 0.02em; line-height: 1.2; }
+    .nav-title { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.04em; font-weight: 400; }
+    .nav-links { display: flex; align-items: center; gap: 1rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em; transition: color 0.2s; }
     .nav-links a:hover { color: var(--text); }
-    .nav-actions { display: flex; align-items: center; gap: 1rem; min-width: 200px; justify-content: flex-end; }
-    .nav-icon { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; color: var(--muted); text-decoration: none; border: 1px solid var(--card-border); transition: color 0.2s, border-color 0.2s, background 0.2s; }
-    .nav-icon svg { width: 17px; height: 17px; }
+    .nav-actions { display: flex; align-items: center; gap: 0.6rem; }
+    .nav-icon { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 6px; color: var(--muted); text-decoration: none; border: 1px solid var(--card-border); transition: color 0.2s, border-color 0.2s, background 0.2s; }
+    .nav-icon svg { width: 15px; height: 15px; }
     .nav-icon:hover { color: var(--text); border-color: var(--muted); background: var(--card-bg); }
-    .nav-resume { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 1.1rem; border-radius: 6px; border: 1px solid var(--muted); color: var(--text); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; transition: border-color 0.2s, background 0.2s, color 0.2s; }
-    .nav-resume svg { width: 14px; height: 14px; }
+    .nav-resume { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.35rem 0.8rem; border-radius: 6px; border: 1px solid var(--muted); color: var(--text); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; transition: border-color 0.2s, background 0.2s, color 0.2s; white-space: nowrap; }
+    .nav-resume svg { width: 12px; height: 12px; }
     .nav-resume:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 
-    .hero-tag { display: inline-block; padding: 0.3rem 1rem; border-radius: 999px; background: var(--accent-light); color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.8rem; }
-    #hero {height: 60vh;min-height: unset;display: flex;flex-direction: column;align-items: center;justify-content: center;padding: 2rem 4rem;  /* <-- add more horizontal padding */background: linear-gradient(160deg, #1a1c25 0%, #1e2235 100%);} 
-    #hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; }
-     #hero h1 span { color: var(--accent); }
-    #hero .subtitle { margin-top: 0.6rem; font-size: 1.4rem; color: var(--muted); letter-spacing: 0.04em; } 
-    .cta-btn { display: inline-block; margin-top: 1.2rem; padding: 0.7rem 2rem; border-radius: 6px; background: var(--accent); color: #fff; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.07em; text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 18px rgba(37,99,235,0.25); }
-    .cta-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
+    /* Desktop nav hides mobile hamburger */
+    .hamburger { display: none; }
 
-    section { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem 4rem; }
+    /* Mobile nav: collapse links */
+    @media (max-width: 700px) {
+      .nav-links-desktop { display: none; }
+      .nav-actions-desktop { display: none; }
+      .hamburger {
+        display: flex; flex-direction: column; justify-content: center; gap: 5px;
+        width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 6px;
+        flex-shrink: 0;
+      }
+      .hamburger span {
+        display: block; height: 2px; width: 22px; background: var(--muted);
+        border-radius: 2px; transition: all 0.25s;
+      }
+      .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--text); }
+      .hamburger.open span:nth-child(2) { opacity: 0; }
+      .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--text); }
+    }
+
+    /* Single mobile overlay — lives directly on body, always on top */
+    #mobile-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    #mobile-overlay.open { display: block; pointer-events: all; }
+    #mobile-overlay-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(10,12,28,0.5);
+    }
+    #mobile-overlay-panel {
+      position: absolute;
+      top: 60px; left: 0; right: 0;
+      background: #13151e;
+      border-bottom: 1px solid var(--card-border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+    #mobile-overlay-panel a,
+    #mobile-overlay-panel button {
+      display: block; width: 100%;
+      padding: 1rem 1.5rem;
+      color: var(--muted); font-family: 'Rajdhani', sans-serif;
+      font-size: 1.05rem; font-weight: 600; letter-spacing: 0.04em;
+      text-decoration: none; border: none; background: none;
+      cursor: pointer; text-align: left;
+      border-bottom: 1px solid var(--card-border);
+      transition: color 0.15s, background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #mobile-overlay-panel a:last-child,
+    #mobile-overlay-panel button:last-child { border-bottom: none; }
+    #mobile-overlay-panel a:active,
+    #mobile-overlay-panel button:active { color: var(--text); background: var(--card-bg); }
+    #mobile-overlay-panel .mm-label {
+      display: block; padding: 0.6rem 1.5rem 0.3rem;
+      color: var(--accent); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      border-bottom: 1px solid var(--card-border);
+      pointer-events: none;
+    }
+
+    /* ── HERO ── */
+    .hero-tag { display: inline-block; padding: 0.3rem 1rem; border-radius: 999px; background: var(--accent-light); color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.8rem; }
+    #hero {
+      min-height: 55vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem 2.5rem;
+      background: linear-gradient(160deg, #1a1c25 0%, #1e2235 100%);
+    }
+    #hero h1 { font-size: clamp(1.6rem, 5vw, 3.5rem); font-weight: 700; }
+    #hero h1 span { color: var(--accent); }
+    #hero .subtitle { margin-top: 0.6rem; font-size: clamp(0.9rem, 2.5vw, 1.3rem); color: var(--muted); letter-spacing: 0.04em; }
+    .hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; width: 100%; max-width: 1000px; text-align: left; }
+    .hero-avatar { flex-shrink: 0; width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--accent); padding: 4px; background: var(--card-bg); }
+    .hero-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+
+    @media (max-width: 600px) {
+      #hero { padding: 2rem 1.2rem; min-height: auto; }
+      .hero-inner { flex-direction: column-reverse; align-items: center; text-align: center; gap: 1.2rem; }
+      .hero-avatar { width: 120px; height: 120px; }
+      #hero h1 { font-size: 1.6rem; }
+      #hero .subtitle { font-size: 0.9rem; }
+    }
+
+    /* ── SHOWCASE ── */
+    #showcase { padding: 0 1.5rem 1rem; max-width: 1400px; margin: 0 auto; }
+    .showcase-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .showcase-item { border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); aspect-ratio: 16/9; background: #0d0f1a; }
+    .showcase-item img, .showcase-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    @media (max-width: 700px) {
+      #showcase { padding: 0 1rem 1rem; }
+      .showcase-grid { grid-template-columns: 1fr; gap: 0.7rem; }
+    }
+
+    /* ── SECTIONS ── */
+    section { max-width: 1400px; margin: 0 auto; padding: 1rem 1.5rem 4rem; }
     .section-title { text-align: center; font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 0.4rem; }
     .section-line { width: 48px; height: 3px; border-radius: 2px; background: var(--accent); margin: 0 auto 2.8rem; }
 
-    .work-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; max-width: 100%; margin: 0 auto; }
-    .work-tile { position: relative; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 3rem 2rem; cursor: pointer; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; text-align: center; }
+    @media (max-width: 600px) {
+      section { padding: 1rem 1rem 3rem; }
+      .section-title { font-size: 1.5rem; }
+    }
+
+    /* ── WORK TILES ── */
+    .work-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; max-width: 100%; margin: 0 auto; }
+    .work-tile { position: relative; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 2.5rem 1.5rem; cursor: pointer; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; text-align: center; }
     .work-tile::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; }
     .work-tile:hover::before { opacity: 1; }
     .work-tile:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(37,99,235,0.15); }
-    .work-tile-icon { width: 64px; height: 64px; border-radius: 14px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; transition: background 0.3s; }
+    .work-tile-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; transition: background 0.3s; }
     .work-tile:hover .work-tile-icon { background: rgba(37,99,235,0.25); }
-    .work-tile-icon svg { width: 30px; height: 30px; color: var(--accent); }
-    .work-tile-title { font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
-    .work-tile-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
-    .work-tile-arrow { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.5rem; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.2s; }
+    .work-tile-icon svg { width: 26px; height: 26px; color: var(--accent); }
+    .work-tile-title { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .work-tile-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .work-tile-arrow { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.2rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.2s; }
     .work-tile:hover .work-tile-arrow { opacity: 1; transform: none; }
-    .work-tile-count { position: absolute; top: 1.2rem; right: 1.2rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; background: var(--bg-alt); border: 1px solid var(--card-border); padding: 0.2rem 0.6rem; border-radius: 999px; }
+    .work-tile-count { position: absolute; top: 1rem; right: 1rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; background: var(--bg-alt); border: 1px solid var(--card-border); padding: 0.2rem 0.5rem; border-radius: 999px; }
 
+    @media (max-width: 768px) {
+      .work-tiles { grid-template-columns: 1fr; gap: 0.9rem; }
+      .work-tile { padding: 1.5rem 1.2rem; text-align: left; display: flex; align-items: center; gap: 1rem; }
+      .work-tile-icon { flex-shrink: 0; margin: 0; width: 48px; height: 48px; border-radius: 10px; }
+      .work-tile-icon svg { width: 22px; height: 22px; }
+      .work-tile-body { flex: 1; }
+      .work-tile-arrow { opacity: 1; transform: none; margin-top: 0.4rem; font-size: 0.72rem; }
+      .work-tile-count { top: 0.8rem; right: 0.8rem; }
+    }
+
+    /* ── PROJECT CARDS ── */
     .group-label { text-align: center; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: 1.5rem; }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); gap: 1.5rem; position: relative; padding-bottom: 3rem; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1.2rem; position: relative; padding-bottom: 3rem; }
     .project-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; overflow: hidden; cursor: pointer; text-decoration: none; color: inherit; display: block; box-shadow: var(--shadow); position: relative; z-index: 1; transition: transform 0.38s cubic-bezier(0.34, 1.15, 0.64, 1), box-shadow 0.38s ease, opacity 0.3s ease, border-color 0.3s ease; }
-    .project-card.expanded { transform: scale(1.5); z-index: 20; box-shadow: 0 28px 64px rgba(10,12,28,0.32); border-color: var(--accent); }
-    .projects-grid.has-expanded .project-card:not(.expanded) { opacity: 0.4; transform: scale(0.97); }
+    .project-card.expanded { transform: scale(1.05); z-index: 20; box-shadow: 0 28px 64px rgba(10,12,28,0.32); border-color: var(--accent); }
+    .projects-grid.has-expanded .project-card:not(.expanded) { opacity: 0.6; }
     .card-media { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; }
     .card-media img, .card-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .card-media video { position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.3s ease; }
     .project-card.expanded .card-media video { opacity: 1; }
-    .card-hint { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.5rem; background: linear-gradient(to top, rgba(37,99,235,0.85), transparent); color: #fff; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-align: center; text-transform: uppercase; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
+    .card-hint { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.5rem; background: linear-gradient(to top, rgba(37,99,235,0.85), transparent); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-align: center; text-transform: uppercase; opacity: 0; transition: opacity 0.25s ease; pointer-events: none; }
     .project-card.expanded .card-hint { opacity: 1; }
-    .card-label { padding: 1rem 1.2rem 1.3rem; border-top: 1px solid var(--card-border); text-align: left; }
-    .card-label-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
-    .card-label-role { font-size: 0.82rem; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.6rem; }
-    .card-label-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .card-label { padding: 1rem 1.1rem 1.2rem; border-top: 1px solid var(--card-border); text-align: left; }
+    .card-label-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+    .card-label-role { font-size: 0.8rem; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .card-label-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
 
+    @media (max-width: 700px) {
+      .projects-grid { grid-template-columns: 1fr; gap: 0.9rem; }
+      .project-card.expanded { transform: none; }
+      .projects-grid.has-expanded .project-card:not(.expanded) { opacity: 1; }
+    }
+
+    /* ── ABOUT ── */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 960px; margin: 0 auto; align-items: start; }
-    @media (max-width: 680px) { .about-grid { grid-template-columns: 1fr; } }
-    .about-bio { line-height: 1.85; color: var(--muted); font-size: 1.02rem; }
+    @media (max-width: 680px) { .about-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    .about-bio { line-height: 1.85; color: var(--muted); font-size: 1rem; }
     .about-bio p + p { margin-top: 0.85rem; }
     .about-bio strong { color: var(--text); }
-    .skills-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.4rem; }
-    .chip { padding: 0.3rem 0.85rem; border-radius: 999px; background: var(--accent-light); color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; }
-    .tl-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.9rem; }
-    .tl-item { position: relative; padding-left: 1.3rem; margin-bottom: 1.3rem; border-left: 2px solid var(--card-border); }
+    .skills-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+    .chip { padding: 0.28rem 0.8rem; border-radius: 999px; background: var(--accent-light); color: var(--accent); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; }
+    .tl-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.9rem; }
+    .tl-item { position: relative; padding-left: 1.2rem; margin-bottom: 1.2rem; border-left: 2px solid var(--card-border); }
     .tl-item::before { content: ''; position: absolute; left: -5px; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-    .tl-org { font-size: 0.78rem; color: var(--accent); font-weight: 700; margin-bottom: 0.1rem; }
-    .tl-role { font-weight: 700; color: var(--text); font-size: 0.93rem; }
-    .tl-date { font-size: 0.76rem; color: var(--muted); margin: 0.15rem 0 0.3rem; }
-    .tl-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+    .tl-org { font-size: 0.76rem; color: var(--accent); font-weight: 700; margin-bottom: 0.1rem; }
+    .tl-role { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+    .tl-date { font-size: 0.73rem; color: var(--muted); margin: 0.15rem 0 0.3rem; }
+    .tl-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
 
-    .contact-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2.5rem 2rem; max-width: 580px; margin: 0 auto; box-shadow: var(--shadow); text-align: center; }
-    .contact-card p { color: var(--muted); font-size: 1rem; line-height: 1.7; margin-bottom: 1.8rem; }
-    .contact-links { display: flex; justify-content: center; gap: 0.9rem; flex-wrap: wrap; }
-    .contact-links a { display: inline-block; padding: 0.55rem 1.3rem; border-radius: 6px; border: 1.5px solid var(--card-border); color: var(--text); font-size: 0.88rem; font-weight: 600; text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s; }
+    /* ── CONTACT ── */
+    .contact-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2rem 1.5rem; max-width: 580px; margin: 0 auto; box-shadow: var(--shadow); text-align: center; }
+    .contact-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .contact-links { display: flex; justify-content: center; gap: 0.7rem; flex-wrap: wrap; }
+    .contact-links a { display: inline-block; padding: 0.5rem 1.1rem; border-radius: 6px; border: 1.5px solid var(--card-border); color: var(--text); font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: border-color 0.2s, color 0.2s, background 0.2s; }
     .contact-links a:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-    .cv-btn { display: inline-flex; align-items: center; gap: 0.45rem; margin-top: 1.5rem; padding: 0.75rem 2rem; border-radius: 6px; background: var(--accent); color: #fff; font-size: 0.9rem; font-weight: 700; text-decoration: none; letter-spacing: 0.06em; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 14px rgba(37,99,235,0.25); }
+    .cv-btn { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.3rem; padding: 0.7rem 1.8rem; border-radius: 6px; background: var(--accent); color: #fff; font-size: 0.88rem; font-weight: 700; text-decoration: none; letter-spacing: 0.06em; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 14px rgba(37,99,235,0.25); }
     .cv-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
-    .cv-btn svg { width: 16px; height: 16px; fill: currentColor; }
+    .cv-btn svg { width: 15px; height: 15px; fill: currentColor; }
 
-    footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--card-border); }
+    /* ── FOOTER ── */
+    footer { text-align: center; padding: 1.5rem; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--card-border); }
+
+    /* ── FADE UP ── */
     .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
     .fade-up.visible { opacity: 1; transform: none; }
 
-    .back-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: none; border: none; color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; transition: color 0.2s; padding: 0; }
+    /* ── BACK BUTTON ── */
+    .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: none; border: none; color: var(--muted); font-family: 'Rajdhani', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; transition: color 0.2s; padding: 0; }
     .back-btn:hover { color: var(--accent); }
-    .back-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .back-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
+    /* ── PROJECT DETAIL ── */
     #project-screen { background: var(--bg); }
     .p-hero { position: relative; width: 100%; aspect-ratio: 21/9; overflow: hidden; background: #0d0f1a; }
     @media (max-width: 700px) { .p-hero { aspect-ratio: 16/9; } }
     .p-hero img, .p-hero video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .p-hero video { position: absolute; top: 0; left: 0; }
-    .p-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,12,28,0.72) 0%, transparent 55%); display: flex; align-items: flex-end; padding: 2.5rem 3rem; }
-    .p-hero-overlay h1 { font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 700; color: #fff; line-height: 1.1; }
-    .p-tag { display: inline-block; margin-bottom: 0.55rem; padding: 0.25rem 0.85rem; border-radius: 999px; background: rgba(37,99,235,0.75); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-    .p-body { max-width: 1200px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
-    .meta-row { display: flex; flex-wrap: wrap; gap: 1.2rem 2.5rem; padding-bottom: 2rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--card-border); }
-    .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
-    .meta-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
-    .meta-value { font-size: 0.95rem; font-weight: 600; color: var(--text); }
-    .p-section { margin-bottom: 2.8rem; }
-    .p-section h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+    .p-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,12,28,0.72) 0%, transparent 55%); display: flex; align-items: flex-end; padding: 1.5rem 1.5rem; }
+    .p-hero-overlay h1 { font-size: clamp(1.5rem, 5vw, 3.2rem); font-weight: 700; color: #fff; line-height: 1.1; }
+    .p-tag { display: inline-block; margin-bottom: 0.4rem; padding: 0.22rem 0.75rem; border-radius: 999px; background: rgba(37,99,235,0.75); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .p-body { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 0.9rem 2rem; padding-bottom: 1.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--card-border); }
+    .meta-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .meta-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
+    .meta-value { font-size: 0.92rem; font-weight: 600; color: var(--text); }
+    .p-section { margin-bottom: 2.5rem; }
+    .p-section h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.5rem; }
     .p-section h2::before { content: ''; display: inline-block; width: 4px; height: 1.1em; border-radius: 2px; background: var(--accent); flex-shrink: 0; }
-    .p-section p { color: var(--muted); line-height: 1.85; font-size: 1rem; }
-    .p-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.9rem; margin-top: 1rem; }
+    .p-section p { color: var(--muted); line-height: 1.85; font-size: 0.97rem; }
+    .p-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.7rem; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
     .gallery img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; border: 1px solid var(--card-border); cursor: zoom-in; transition: transform 0.25s, box-shadow 0.25s; }
     .gallery img:hover { transform: scale(1.03); box-shadow: 0 8px 28px rgba(37,99,235,0.15); }
 
+    @media (max-width: 600px) {
+      .p-body { padding: 1.5rem 1rem 3rem; }
+      .gallery { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    }
+
+    /* ── HUD SCREEN ── */
+    #hud-screen { background: var(--bg); }
+    .hud-hero { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #0d0f1a; }
+    .hud-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hud-hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
+    .hud-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,12,28,0.85) 0%, rgba(10,12,28,0.3) 50%, transparent 100%); display: flex; align-items: flex-end; padding: 1.5rem 1.5rem; }
+    .hud-hero-overlay h1 { font-size: clamp(1.5rem, 5vw, 3.2rem); font-weight: 700; color: #fff; line-height: 1.1; }
+
+    .hud-stats { display: flex; gap: 1.2rem 2rem; flex-wrap: wrap; padding: 1.5rem 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); margin-bottom: 2.5rem; }
+    .hud-stat { display: flex; flex-direction: column; gap: 0.15rem; }
+    .hud-stat-val { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+    .hud-stat-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+
+    .hud-feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-top: 1rem; }
+    .hud-feature-tile { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); cursor: zoom-in; background: #0d0f1a; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+    .hud-feature-tile:hover { transform: scale(1.02); box-shadow: 0 8px 28px rgba(37,99,235,0.2); border-color: var(--accent); }
+    .hud-feature-tile img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .hud-feature-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.5rem 0.6rem; background: linear-gradient(to top, rgba(10,12,28,0.9), transparent); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; color: rgba(255,255,255,0.85); text-transform: uppercase; }
+
+    @media (max-width: 600px) {
+      .hud-feature-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    }
+
+    /* ── TOOLS SCREEN ── */
     #tools-screen { background: var(--bg); }
+    .tools-hero { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #0d0f1a; }
+    .tools-hero img, .tools-hero video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tools-hero video { position: absolute; top: 0; left: 0; }
+    .tools-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,12,28,0.85) 0%, rgba(10,12,28,0.3) 50%, transparent 100%); display: flex; align-items: flex-end; padding: 1.5rem 1.5rem; }
+    .tools-hero-overlay h1 { font-size: clamp(1.5rem, 5vw, 3.2rem); font-weight: 700; color: #fff; line-height: 1.1; }
+    .tools-stats { display: flex; gap: 1.2rem 2rem; flex-wrap: wrap; padding: 1.5rem 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); margin-bottom: 2.5rem; }
+    .tools-stat { display: flex; flex-direction: column; gap: 0.15rem; }
+    .tools-stat-val { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+    .tools-stat-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+    .tools-feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-top: 1rem; }
+    .tools-feature-tile { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); cursor: zoom-in; background: #0d0f1a; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+    .tools-feature-tile:hover { transform: scale(1.02); box-shadow: 0 8px 28px rgba(37,99,235,0.2); border-color: var(--accent); }
+    .tools-feature-tile img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .tools-feature-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.5rem 0.6rem; background: linear-gradient(to top, rgba(10,12,28,0.9), transparent); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; color: rgba(255,255,255,0.85); text-transform: uppercase; }
 
-    .tools-hero {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      background: #0d0f1a;
-    }
-    .tools-hero img,
-    .tools-hero video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .tools-hero video {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-    .tools-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(10,12,28,0.85) 0%, rgba(10,12,28,0.3) 50%, transparent 100%);
-      display: flex;
-      align-items: flex-end;
-      padding: 2.5rem 3rem;
-    }
-    .tools-hero-overlay h1 {
-      font-size: clamp(2rem, 5vw, 3.6rem);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.1;
+    @media (max-width: 600px) {
+      .tools-feature-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
     }
 
-    .tools-feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    @media (max-width: 900px) {
-      .tools-feature-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 640px) {
-      .tools-feature-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .tools-feature-tile {
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-      cursor: zoom-in;
-      background: #0d0f1a;
-      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-    }
-    .tools-feature-tile:hover {
-      transform: scale(1.02);
-      box-shadow: 0 8px 28px rgba(37,99,235,0.2);
-      border-color: var(--accent);
-    }
-    .tools-feature-tile img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      display: block;
-    }
-    .tools-feature-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 0.6rem 0.8rem;
-      background: linear-gradient(to top, rgba(10,12,28,0.9), transparent);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.85);
-      text-transform: uppercase;
-    }
-
-    .tools-stats {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      padding: 2rem 0;
-      border-top: 1px solid var(--card-border);
-      border-bottom: 1px solid var(--card-border);
-      margin-bottom: 3rem;
-    }
-    .tools-stat {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-    .tools-stat-val {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .tools-stat-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-    .lightbox { position: fixed; inset: 0; z-index: 600; background: rgba(10,12,28,0.88); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
-    .lightbox.open { opacity: 1; pointer-events: all; }
-    .lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 10px; box-shadow: 0 24px 64px rgba(0,0,0,0.5); }
-    .lb-close { position: absolute; top: 1.2rem; right: 1.5rem; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; opacity: 0.7; transition: opacity 0.2s; z-index: 10; }
-    .lb-close:hover { opacity: 1; }
-    .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(10,12,28,0.55); border: 1px solid rgba(255,255,255,0.15); color: #fff; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, border-color 0.2s; z-index: 10; }
-    .lb-nav:hover { background: rgba(37,99,235,0.7); border-color: var(--accent); }
-    .lb-nav svg { width: 20px; height: 20px; }
-    .lb-prev { left: 1.5rem; }
-    .lb-next { right: 1.5rem; }
-    .lb-counter { position: absolute; bottom: 1.2rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.55); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; font-family: 'Rajdhani', sans-serif; }
-
-    .deep-dive { margin-top: 3rem; }
-    .deep-dive h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.6rem; }
+    /* ── DEEP DIVE ── */
+    .deep-dive { margin-top: 2.5rem; }
+    .deep-dive h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
     .deep-dive h2::before { content: ''; display: inline-block; width: 4px; height: 1.1em; border-radius: 2px; background: var(--accent); flex-shrink: 0; }
-    .dd-block { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; margin-bottom: 5rem; padding-bottom: 5rem; border-bottom: 1px solid var(--card-border); }
+    .dd-block { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--card-border); }
     .dd-block:last-child { border-bottom: none; }
     .dd-block.reverse { direction: rtl; }
     .dd-block.reverse > * { direction: ltr; }
-    @media (max-width: 700px) { .dd-block, .dd-block.reverse { grid-template-columns: 1fr; direction: ltr; } }
-    .dd-text { display: flex; flex-direction: column; gap: 0.8rem; }
-    .dd-step { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; }
-    .dd-title { font-size: 1.35rem; font-weight: 700; color: var(--text); }
-    .dd-desc { color: var(--muted); line-height: 1.9; font-size: 1.05rem; }
+
+    @media (max-width: 700px) {
+      .dd-block, .dd-block.reverse { grid-template-columns: 1fr; direction: ltr; gap: 1.2rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; }
+    }
+
+    .dd-text { display: flex; flex-direction: column; gap: 0.7rem; }
+    .dd-step { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; }
+    .dd-title { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .dd-desc { color: var(--muted); line-height: 1.85; font-size: 0.97rem; }
 
     .dd-media-panel { position: relative; border-radius: 10px; overflow: hidden; background: #0d0f1a; border: 1px solid var(--card-border); }
-    .dd-media-panel img,
-    .dd-media-panel video { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; min-height: 200px; }
+    .dd-media-panel img, .dd-media-panel video { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; min-height: 150px; }
     .dd-media-panel video { display: none; }
-    .dd-media-panel img { display: block; }
     .dd-media-panel.show-video img { display: none; }
     .dd-media-panel.show-video video { display: block; }
-    .dd-media-panel.show-code img,
-    .dd-media-panel.show-code video { display: none; }
-
+    .dd-media-panel.show-code img, .dd-media-panel.show-code video { display: none; }
     .dd-code-view { display: none; background: #0d0f1a; }
     .dd-media-panel.show-code .dd-code-view { display: block; }
-    .dd-code-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; background: #12141f; border-bottom: 1px solid var(--card-border); }
-    .dd-code-filename { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--muted); }
-    .dd-code-lang { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 0.15rem 0.5rem; border-radius: 4px; }
-    .dd-code-view pre { margin: 0; padding: 1rem 1.1rem; overflow-x: auto; font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; line-height: 1.7; color: #c9d1e0; }
+    .dd-code-header { display: flex; align-items: center; justify-content: space-between; padding: 0.45rem 0.9rem; background: #12141f; border-bottom: 1px solid var(--card-border); }
+    .dd-code-filename { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+    .dd-code-lang { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 0.12rem 0.45rem; border-radius: 4px; }
+    .dd-code-view pre { margin: 0; padding: 0.9rem 1rem; overflow-x: auto; font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; line-height: 1.7; color: #c9d1e0; }
     .dd-code-view code { font-family: inherit; }
-
-    .dd-toggle-group { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-    .dd-toggle-btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 1rem; border-radius: 6px; border: 1.5px solid var(--card-border); background: none; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; color: var(--muted); transition: border-color 0.2s, color 0.2s, background 0.2s; }
+    .dd-toggle-group { display: flex; gap: 0.4rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    .dd-toggle-btn { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.85rem; border-radius: 6px; border: 1.5px solid var(--card-border); background: none; cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); transition: border-color 0.2s, color 0.2s, background 0.2s; }
     .dd-toggle-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
     .dd-toggle-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-    .dd-toggle-btn svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+    .dd-toggle-btn svg { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; }
 
+    /* syntax highlight */
     .tok-kw   { color: #7aa2f7; }
     .tok-type { color: #9ece6a; }
     .tok-fn   { color: #7dcfff; }
@@ -309,53 +367,48 @@
     .tok-lit  { color: #ff9e64; }
     .tok-num  { color: #ff9e64; }
 
-    #hud-screen { background: var(--bg); }
-    .hud-hero { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #0d0f1a; }
-    .hud-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hud-hero video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
-    .hud-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,12,28,0.85) 0%, rgba(10,12,28,0.3) 50%, transparent 100%); display: flex; align-items: flex-end; padding: 2.5rem 3rem; }
-    .hud-hero-overlay h1 { font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 700; color: #fff; line-height: 1.1; }
+    /* ── LIGHTBOX ── */
+    .lightbox { position: fixed; inset: 0; z-index: 600; background: rgba(10,12,28,0.92); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img { max-width: 94vw; max-height: 86vh; border-radius: 10px; box-shadow: 0 24px 64px rgba(0,0,0,0.5); }
+    .lb-close { position: absolute; top: 1rem; right: 1rem; background: rgba(10,12,28,0.6); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 1.4rem; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; z-index: 10; }
+    .lb-close:hover { background: rgba(37,99,235,0.7); }
+    .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(10,12,28,0.55); border: 1px solid rgba(255,255,255,0.15); color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, border-color 0.2s; z-index: 10; }
+    .lb-nav:hover { background: rgba(37,99,235,0.7); border-color: var(--accent); }
+    .lb-nav svg { width: 18px; height: 18px; }
+    .lb-prev { left: 0.8rem; }
+    .lb-next { right: 0.8rem; }
+    .lb-counter { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.55); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; font-family: 'Rajdhani', sans-serif; }
 
-    .hud-feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
-    .hud-feature-tile { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); cursor: zoom-in; background: #0d0f1a; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
-    .hud-feature-tile:hover { transform: scale(1.02); box-shadow: 0 8px 28px rgba(37,99,235,0.2); border-color: var(--accent); }
-    .hud-feature-tile img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
-    .hud-feature-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.6rem 0.8rem; background: linear-gradient(to top, rgba(10,12,28,0.9), transparent); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: rgba(255,255,255,0.85); text-transform: uppercase; }
-
-    .hud-stats { display: flex; gap: 2rem; flex-wrap: wrap; padding: 2rem 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); margin-bottom: 3rem; }
-    .hud-stat { display: flex; flex-direction: column; gap: 0.2rem; }
-    .hud-stat-val { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
-    .hud-stat-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; }
-
+    /* ── MISC ── */
     #advancedOptionsImg { transition: opacity 0.3s ease; }
+    #gameSlideImg { transition: opacity 0.3s ease; }
 
-#showcase { padding: 0 2rem 1rem; max-width: 1400px; margin: 0 auto; }
-.showcase-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
-.showcase-item { border-radius: 10px; overflow: hidden; border: 1px solid var(--card-border); aspect-ratio: 16/9; background: #0d0f1a; }
-.showcase-item img, .showcase-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
-#gameSlideImg { transition: opacity 0.3s ease; }
-
-    
+    /* Contact note */
+    .contact-note { margin: 0 0 1.4rem; padding: 0.85rem 1.1rem; border-radius: 8px; background: var(--accent-light); border: 1px solid var(--accent); font-size: 0.82rem; color: var(--muted); line-height: 1.6; text-align: left; }
+    .contact-note strong { color: var(--text); display: block; margin-bottom: 0.25rem; }
   </style>
 </head>
 <body>
 
+<!-- Single mobile overlay — appended to body by JS -->
 <div id="viewport">
 
-  <!-- ████████  MAIN SCREEN  ████████ -->
+  <!-- ████ MAIN SCREEN ████ -->
   <div id="main-screen">
     <nav id="main-nav">
       <div class="nav-identity">
         <span class="nav-name">Alexander Englesson</span>
-        <span class="nav-title">Game Systems & Gameplay Programmer</span>
+        <span class="nav-title">Game Systems &amp; Gameplay Programmer</span>
       </div>
-      <div class="nav-links">
+      <!-- Desktop links -->
+      <div class="nav-links nav-links-desktop">
         <a href="#hero">Home</a>
         <a href="#projects">Projects</a>
         <a href="#about">About Me</a>
         <a href="#contact">Contact</a>
       </div>
-      <div class="nav-actions">
+      <div class="nav-actions nav-actions-desktop">
         <a href="https://github.com/AlexanderEnglessonCODE" target="_blank" class="nav-icon" title="GitHub">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
         </a>
@@ -367,73 +420,78 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
         </a>
       </div>
+      <!-- Mobile hamburger -->
+      <button class="hamburger" id="hamburger-main" aria-label="Menu" onclick="toggleMobileMenu('main')">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
 
     <div id="hero">
-  <span class="hero-tag">Game Programmer</span>
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:3rem; width:100%; max-width:1000px; text-align:left;">
-    <div style="display:flex; flex-direction:column; gap:0.7rem;">
-      <h1 style="font-size: clamp(1.6rem, 3.5vw, 3rem);">Portfolio by <span>Alexander Englesson</span></h1>
-      <p class="subtitle" style="font-size: 1.1rem;">C++ &nbsp;·&nbsp; Gameplay Systems &nbsp;·&nbsp; Engine Programming</p>
+      <span class="hero-tag">Game Programmer</span>
+      <div class="hero-inner">
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <h1>Portfolio by <span>Alexander Englesson</span></h1>
+          <p class="subtitle">C++ &nbsp;·&nbsp; Gameplay Systems &nbsp;·&nbsp; Engine Programming</p>
+        </div>
+        <div class="hero-avatar">
+          <img src="SANDER.jpg" alt="Alexander Englesson">
+        </div>
+      </div>
     </div>
-    <div style="flex-shrink:0; width:280px; height:280px; border-radius:50%; border:3px solid var(--accent); padding:4px; background:var(--card-bg); box-sizing:border-box;">
-      <img src="SANDER.jpg" alt="Alexander Englesson" style="width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;">
-    </div>
-  </div>
-</div>
 
     <div id="showcase">
       <div class="showcase-grid">
-        <div class="showcase-item" id="showcaseGames">
+        <div class="showcase-item">
           <img id="gameSlideImg" src="Images/Projekt1/Thumbnail_P1_G4.png" alt="Game Showcase">
         </div>
-          <div class="showcase-item">
-    <video src="Images/HUD/mainVideo.mp4" 
-           poster="Images/HUD/mainVideo.png"
-           muted loop playsinline autoplay preload="auto">
-    </video>
-</div>
-<div class="showcase-item">
-    <video src="Partikel_system_main.mp4" 
-           poster="Partikel_system_main.png"
-           muted loop playsinline autoplay preload="auto">
-    </video>
-</div>
+        <div class="showcase-item">
+          <video src="Images/HUD/mainVideo.mp4" poster="Images/HUD/mainVideo.png" muted loop playsinline autoplay preload="auto"></video>
+        </div>
+        <div class="showcase-item">
+          <video src="Partikel_system_main.mp4" poster="Partikel_system_main.png" muted loop playsinline autoplay preload="auto"></video>
         </div>
       </div>
+    </div>
 
     <section id="projects">
       <div class="work-tiles fade-up">
         <div class="work-tile" id="tileProjects">
           <span class="work-tile-count">5 Projects</span>
           <div class="work-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-          <div class="work-tile-title">Group Projects</div>
-          <div class="work-tile-desc">5 team games built in Unity and custom C++ engines — platformers, action RPGs, top-down adventures, and more.</div>
-          <div class="work-tile-arrow">View Projects →</div>
+          <div class="work-tile-body">
+            <div class="work-tile-title">Group Projects</div>
+            <div class="work-tile-desc">5 team games built in Unity and custom C++ engines — platformers, action RPGs, top-down adventures, and more.</div>
+            <div class="work-tile-arrow">View Projects →</div>
+          </div>
         </div>
         <div class="work-tile" id="tileHud">
           <span class="work-tile-count">Specialisation</span>
           <div class="work-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div class="work-tile-title">In-Game UI Editor</div>
-          <div class="work-tile-desc">A fully custom, drag-and-drop HUD system built in C++ — movable frames, action bars, spellbook, tooltips, and a live edit mode.</div>
-          <div class="work-tile-arrow">View Specialisation →</div>
+          <div class="work-tile-body">
+            <div class="work-tile-title">In-Game UI Editor</div>
+            <div class="work-tile-desc">A fully custom, drag-and-drop HUD system built in C++ — movable frames, action bars, spellbook, tooltips, and a live edit mode.</div>
+            <div class="work-tile-arrow">View Specialisation →</div>
+          </div>
         </div>
         <div class="work-tile" id="tileTools">
           <span class="work-tile-count">Tools</span>
           <div class="work-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-          <div class="work-tile-title">Editor Tools</div>
-          <div class="work-tile-desc">Custom editor tooling built in C++ — particle emitter previews, VFX curve editors, scene document systems, and in-engine debug overlays.</div>
-          <div class="work-tile-arrow">View Tools →</div>
+          <div class="work-tile-body">
+            <div class="work-tile-title">Editor Tools</div>
+            <div class="work-tile-desc">Custom editor tooling built in C++ — particle emitter previews, VFX curve editors, scene document systems, and in-engine debug overlays.</div>
+            <div class="work-tile-arrow">View Tools →</div>
+          </div>
         </div>
       </div>
-      <div id="projectsSection" style="display:none;">
+
+      <div id="projectsSection" style="display:none; margin-top:2rem;">
         <p class="group-label fade-up">Group Projects</p>
         <div class="projects-grid" id="projectsGrid">
-          <div class="project-card fade-up" data-id="1"><div class="card-media"><img src="Images/Projekt1/Thumbnail_P1_G4.png" alt="BugBot"><video src="Images/Projekt1/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Click to view project →</div></div><div class="card-label"><div class="card-label-title">BugBot</div><div class="card-label-role">Gameplay Programmer</div><div class="card-label-desc">A 3D platformer built in Unity. I implemented player movement, the DadBot drone system, moving trains, and haystack kill zones.</div></div></div>
-          <div class="project-card fade-up" data-id="2"><div class="card-media"><img src="Images/Projekt2/FROGMENT-THUMBNAIL.png" alt="FrogMent"><video src="Images/Projekt2/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Click to view project →</div></div><div class="card-label"><div class="card-label-title">FrogMent</div><div class="card-label-role">Gameplay Programmer</div><div class="card-label-desc">A puzzle platformer built in a custom C++ engine where a frog fragments objects to solve environmental puzzles.</div></div></div>
-          <div class="project-card fade-up" data-id="3"><div class="card-media"><img src="Images/Projekt3/3_Mountain_1.png" alt="Blade of Will"><video src="Images/Projekt3/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Click to view project →</div></div><div class="card-label"><div class="card-label-title">Blade of Will</div><div class="card-label-role">Gameplay Programmer — Enemy Systems</div><div class="card-label-desc">A third-person action RPG. I built the full enemy system: movement, AI, melee & ranged combat, collision, animations, and editor tooling.</div></div></div>
-          <div class="project-card fade-up" data-id="4"><div class="card-media"><img src="Images/Projekt4/CargoDiver Screenshot1.png" alt="Cargo Diver"><video src="Images/Projekt4/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Click to view project →</div></div><div class="card-label"><div class="card-label-title">Cargo Diver</div><div class="card-label-role">Gameplay Programmer — Systems</div><div class="card-label-desc">A top-down adventure. I built the interactable system (doors, switches) and a memory-optimised destructable crate system using deferred mesh swapping.</div></div></div>
-          <div class="project-card fade-up" data-id="5"><div class="card-media"><img src="Images/Projekt5/3.png" alt="Cycles of Deluge"><video src="Images/Projekt5/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Click to view project →</div></div><div class="card-label"><div class="card-label-title">Cycles of Deluge</div><div class="card-label-role">Gameplay Programmer — VFX & Boss Systems</div><div class="card-label-desc">A top-down action game. I built a full VFX pipeline with a curve editor wired to pixel/vertex shaders, plus the boss hitzone system with real-time debug overlay.</div></div></div>
+          <div class="project-card fade-up" data-id="1"><div class="card-media"><img src="Images/Projekt1/Thumbnail_P1_G4.png" alt="BugBot"><video src="Images/Projekt1/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Tap to view project →</div></div><div class="card-label"><div class="card-label-title">BugBot</div><div class="card-label-role">Gameplay Programmer</div><div class="card-label-desc">A 3D platformer built in Unity. Player movement, DadBot drone system, moving trains, and haystack kill zones.</div></div></div>
+          <div class="project-card fade-up" data-id="2"><div class="card-media"><img src="Images/Projekt2/FROGMENT-THUMBNAIL.png" alt="FrogMent"><video src="Images/Projekt2/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Tap to view project →</div></div><div class="card-label"><div class="card-label-title">FrogMent</div><div class="card-label-role">Gameplay Programmer</div><div class="card-label-desc">A puzzle platformer in a custom C++ engine where a frog fragments objects to solve environmental puzzles.</div></div></div>
+          <div class="project-card fade-up" data-id="3"><div class="card-media"><img src="Images/Projekt3/3_Mountain_1.png" alt="Blade of Will"><video src="Images/Projekt3/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Tap to view project →</div></div><div class="card-label"><div class="card-label-title">Blade of Will</div><div class="card-label-role">Gameplay Programmer — Enemy Systems</div><div class="card-label-desc">A third-person action RPG. Full enemy system: movement, AI, melee &amp; ranged combat, collision, animations, and editor tooling.</div></div></div>
+          <div class="project-card fade-up" data-id="4"><div class="card-media"><img src="Images/Projekt4/CargoDiver Screenshot1.png" alt="Cargo Diver"><video src="Images/Projekt4/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Tap to view project →</div></div><div class="card-label"><div class="card-label-title">Cargo Diver</div><div class="card-label-role">Gameplay Programmer — Systems</div><div class="card-label-desc">A top-down adventure. Interactable system (doors, switches) and memory-optimised destructable crate system.</div></div></div>
+          <div class="project-card fade-up" data-id="5"><div class="card-media"><img src="Images/Projekt5/3.png" alt="Cycles of Deluge"><video src="Images/Projekt5/trailer_short.mp4" muted loop playsinline></video><div class="card-hint">Tap to view project →</div></div><div class="card-label"><div class="card-label-title">Cycles of Deluge</div><div class="card-label-role">Gameplay Programmer — VFX &amp; Boss Systems</div><div class="card-label-desc">A top-down action game. Full VFX pipeline with a curve editor wired to pixel/vertex shaders, plus the boss hitzone system.</div></div></div>
         </div>
       </div>
     </section>
@@ -460,7 +518,7 @@
           <p class="tl-label">Education</p>
           <div class="tl-item"><div class="tl-org">The Game Assembly — Stockholm</div><div class="tl-role">Game Programming</div><div class="tl-date">Sep 2024 – Jun 2027 (ongoing)</div><div class="tl-desc">C++ and game engine development, gameplay systems, VFX, HUD/UI, team projects with designers and artists.</div></div>
           <div class="tl-item"><div class="tl-org">Lund University — Faculty of Engineering</div><div class="tl-role">Electrical Engineering with Automation</div><div class="tl-date">Aug 2022 – Dec 2023</div><div class="tl-desc">Mathematics, linear algebra, calculus, programming, and automation systems.</div></div>
-          <p class="tl-label" style="margin-top:1.6rem;">Experience</p>
+          <p class="tl-label" style="margin-top:1.4rem;">Experience</p>
           <div class="tl-item"><div class="tl-org">Skärgårdspadel Blidö — Stockholm Archipelago</div><div class="tl-role">Head Padel Coach &amp; Camp Organiser</div><div class="tl-date">Summer 2021 – Present (seasonal)</div><div class="tl-desc">Organised summer camps for 150–250 participants, coaching children and adults.</div></div>
         </div>
       </div>
@@ -469,16 +527,16 @@
     <section id="contact">
       <h2 class="section-title fade-up">Contact</h2>
       <div class="section-line"></div>
-     <div class="contact-card fade-up">
-  <p>I'm currently studying at The Game Assembly and open to internships, collaborations, and game jams. Feel free to reach out!</p>
-  <div style="margin: 0 0 1.6rem; padding: 0.9rem 1.2rem; border-radius: 8px; background: var(--accent-light); border: 1px solid var(--accent); font-size: 0.85rem; color: var(--muted); line-height: 1.65; text-align: left;">
-    <strong style="color: var(--text); display: block; margin-bottom: 0.3rem;">📋 Note regarding internship contact</strong>
-    As per the agreement between the Games Industry and The Game Assembly, neither student nor company may be in contact with one another regarding internships before <strong style="color: var(--text);">April 15</strong>. Any internship offers can be made on <strong style="color: var(--text);">April 27th</strong>, at the earliest.
-  </div>
+      <div class="contact-card fade-up">
+        <p>I'm currently studying at The Game Assembly and open to internships, collaborations, and game jams. Feel free to reach out!</p>
+        <div class="contact-note">
+          <strong>📋 Note regarding internship contact</strong>
+          As per the agreement between the Games Industry and The Game Assembly, neither student nor company may be in contact with one another regarding internships before <strong style="display:inline;color:var(--text);">April 15</strong>. Any internship offers can be made on <strong style="display:inline;color:var(--text);">April 27th</strong>, at the earliest.
+        </div>
         <div class="contact-links">
-          <a href="mailto:alexanderenglesson@outlook.com">alexanderenglesson@outlook.com</a>
+          <a href="/cdn-cgi/l/email-protection#c2a3aea7baa3aca6a7b0a7aca5aea7b1b1adac82adb7b6aeadada9eca1adaf">Email</a>
           <a href="tel:+46707160257">+46 707 160 257</a>
-          <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+          <a href="https://github.com/AlexanderEnglessonCODE" target="_blank">GitHub</a>
           <a href="https://www.linkedin.com/in/alexander-englesson-778099175/" target="_blank">LinkedIn</a>
         </div>
         <a class="cv-btn" href="Alexander_Englesson_CV.pdf" download>
@@ -491,21 +549,23 @@
     <footer>&copy; 2026 Alexander Englesson &nbsp;·&nbsp; Game Programmer &nbsp;·&nbsp; Stockholm</footer>
   </div>
 
-  <!-- ████████  PROJECT DETAIL SCREEN  ████████ -->
+  <!-- ████ PROJECT DETAIL ████ -->
   <div id="project-screen">
     <nav id="project-nav">
       <div class="nav-identity"><span class="nav-name">Alexander Englesson</span><span class="nav-title">Game Systems Programmer</span></div>
-      <div class="nav-links">
+      <div class="nav-links nav-links-desktop">
         <button class="back-btn" id="backBtn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Home</button>
         <button class="back-btn" id="backBtnProjects">Projects</button>
         <button class="back-btn" id="backBtnAbout">About Me</button>
         <button class="back-btn" id="backBtnContact">Contact</button>
       </div>
-      <div class="nav-actions">
-        <a href="https://github.com/yourusername" target="_blank" class="nav-icon" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank" class="nav-icon" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <div class="nav-actions nav-actions-desktop">
+        <a href="https://github.com/AlexanderEnglessonCODE" target="_blank" class="nav-icon" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></a>
         <a href="Alexander_Englesson_CV.pdf" download class="nav-resume">Resume<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a>
       </div>
+      <button class="hamburger" id="hamburger-project" aria-label="Menu" onclick="toggleMobileMenu('project')">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
     <div class="p-hero" id="pHero">
       <img id="pHeroImg" src="" alt="">
@@ -522,26 +582,28 @@
       </div>
       <div class="p-section"><h2>Overview</h2><p id="pOverview"></p></div>
       <div class="p-section"><h2>My Role &amp; Responsibilities</h2><p id="pRole"></p><div class="p-chips" id="pChips"></div></div>
-      <div class="p-section"><h2>Technical Highlights</h2><p id="pTech"></p></div>
+      <div class="p-section" id="pTechSection"><h2>Technical Highlights</h2><p id="pTech"></p></div>
       <div class="deep-dive" id="pDeepDive" style="display:none"><h2>Development Breakdown</h2><div id="pDeepDiveBlocks"></div></div>
       <div class="p-section" id="pGallerySection"><h2>Screenshots</h2><div class="gallery" id="pGallery"></div></div>
     </div>
     <footer>&copy; 2026 Alexander Englesson &nbsp;·&nbsp; Game Programmer &nbsp;·&nbsp; Stockholm</footer>
   </div>
 
-  <!-- ████████  HUD SPECIALISATION SCREEN  ████████ -->
+  <!-- ████ HUD SCREEN ████ -->
   <div id="hud-screen">
     <nav id="hud-nav">
       <div class="nav-identity"><span class="nav-name">Alexander Englesson</span><span class="nav-title">Game Systems Programmer</span></div>
-      <div class="nav-links">
+      <div class="nav-links nav-links-desktop">
         <button class="back-btn" id="hudBackBtn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Home</button>
         <button class="back-btn" id="hudBackBtnAbout">About Me</button>
         <button class="back-btn" id="hudBackBtnContact">Contact</button>
       </div>
-      <div class="nav-actions">
-        <a href="https://github.com/yourusername" target="_blank" class="nav-icon" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></a>
+      <div class="nav-actions nav-actions-desktop">
         <a href="Alexander_Englesson_CV.pdf" download class="nav-resume">Resume<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a>
       </div>
+      <button class="hamburger" id="hamburger-hud" aria-label="Menu" onclick="toggleMobileMenu('hud')">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
 
     <div class="hud-hero">
@@ -560,7 +622,7 @@
 
       <div class="p-section">
         <h2>Overview</h2>
-        <p>I built a fully custom, player-configurable HUD system from scratch in C++ using the schools custom game engine (TGE). The system allows players to enter an edit mode and freely drag, resize, and toggle every UI element — player frame, target frame, party frames, buff/debuff frames, action bars, cast bar, and stance bar. Inspired by World of Warcraft's addon system, every frame is a movable object with real-time snap-to-grid and snap-to-element behaviour.</p>
+        <p>I built a fully custom, player-configurable HUD system from scratch in C++ using the school's custom game engine (TGE). The system allows players to enter an edit mode and freely drag, resize, and toggle every UI element — player frame, target frame, party frames, buff/debuff frames, action bars, cast bar, and stance bar. Inspired by World of Warcraft's addon system, every frame is a movable object with real-time snap-to-grid and snap-to-element behaviour.</p>
       </div>
 
       <div class="p-section">
@@ -569,7 +631,7 @@
         <div class="p-chips">
           <span class="chip">HUD / UI Systems</span><span class="chip">Drag &amp; Drop</span><span class="chip">Edit Mode</span>
           <span class="chip">Action Bars</span><span class="chip">Buff / Debuff System</span><span class="chip">Cast Bar</span>
-          <span class="chip">Party Frames</span><span class="chip">Spell Tooltip</span><span class="chip">C++</span><span class="chip">Custom Engine (TGE)</span>
+          <span class="chip">Party Frames</span><span class="chip">Spell Tooltip</span><span class="chip">C++</span><span class="chip">TGE</span>
         </div>
       </div>
 
@@ -585,7 +647,7 @@
           <div class="dd-text">
             <span class="dd-step">Step 01 — Normal View</span>
             <div class="dd-title">A Complete In-Game HUD</div>
-            <p class="dd-desc">The normal gameplay view shows the full HUD in action — player and target unit frames with portraits, HP and mana bars, five party frames on the left, two action bars with spell icons and cooldown timers, buff icons with duration countdowns, and a cast bar that appears when casting. Everything is live and functional.</p>
+            <p class="dd-desc">The normal gameplay view shows the full HUD in action — player and target unit frames with portraits, HP and mana bars, five party frames, two action bars with spell icons and cooldown timers, buff icons with duration countdowns, and a cast bar.</p>
           </div>
           <div class="dd-media-panel" id="media-step1">
             <img src="Images/HUD/Normal_view.png" alt="Normal View">
@@ -595,17 +657,11 @@
         <div class="dd-block reverse">
           <div class="dd-text">
             <span class="dd-step">Step 02 — Edit Mode</span>
-            <div class="dd-title">Live Grid, Draggable Frames & Debug Bounds</div>
-            <p class="dd-desc">Pressing the edit mode toggle overlays a purple grid across the screen and draws debug bounding boxes around every HUD element. All frames become draggable — snap-to-grid keeps them aligned, and snap-to-elements lets frames lock to each other's edges. The HUD Edit Mode panel appears at the centre, letting the player check/uncheck individual frames and adjust the grid size with a live slider.</p>
+            <div class="dd-title">Live Grid, Draggable Frames &amp; Debug Bounds</div>
+            <p class="dd-desc">Pressing the edit mode toggle overlays a purple grid across the screen and draws debug bounding boxes around every HUD element. All frames become draggable — snap-to-grid keeps them aligned, and snap-to-elements lets frames lock to each other's edges.</p>
             <div class="dd-toggle-group">
-              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step2','image',this)">
-                <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
-                Image
-              </button>
-              <button class="dd-toggle-btn" onclick="setMediaMode('media-step2','video',this)">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                Video
-              </button>
+              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step2','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('media-step2','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
             </div>
           </div>
           <div class="dd-media-panel" id="media-step2">
@@ -618,7 +674,7 @@
           <div class="dd-text">
             <span class="dd-step">Step 03 — Advanced Options</span>
             <div class="dd-title">Two-Mode Settings Panel</div>
-            <p class="dd-desc">The HUD Edit Panel has two modes — compact and advanced. In compact mode it shows the most common toggles. Enabling Advanced Options expands the panel and reveals extra sections: Frames (Pet Frame, Raid Frames) and Combat (Cast Bar, Stance Bar, Pet Bar). The panel itself is draggable in edit mode. All checkboxes wire directly to the HudEditSettings struct which propagates visibility changes to every frame instantly.</p>
+            <p class="dd-desc">The HUD Edit Panel has two modes — compact and advanced. In compact mode it shows the most common toggles. Enabling Advanced Options expands the panel and reveals extra sections: Frames (Pet Frame, Raid Frames) and Combat (Cast Bar, Stance Bar, Pet Bar).</p>
           </div>
           <div class="dd-media-panel">
             <img id="advancedOptionsImg" src="Images/HUD/Editmode_Advanced_options.png" alt="Advanced Options">
@@ -629,16 +685,10 @@
           <div class="dd-text">
             <span class="dd-step">Step 04 — Button Base Class</span>
             <div class="dd-title">Shared Architecture for Every HUD Element</div>
-            <p class="dd-desc">Every HUD element — player frame, target frame, action bar slots, cast bar — inherits from a single Button base class. It handles dragging, hover detection, child propagation, visibility, camera binding, and debug rendering. Adding a new movable frame takes almost no boilerplate code.</p>
+            <p class="dd-desc">Every HUD element inherits from a single Button base class. It handles dragging, hover detection, child propagation, visibility, camera binding, and debug rendering. Adding a new movable frame takes almost no boilerplate code.</p>
             <div class="dd-toggle-group">
-              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step4','image',this)">
-                <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
-                Image
-              </button>
-              <button class="dd-toggle-btn" onclick="setMediaMode('media-step4','code',this)">
-                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-                Code
-              </button>
+              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step4','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('media-step4','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
             </div>
           </div>
           <div class="dd-media-panel" id="media-step4">
@@ -648,25 +698,18 @@
               <pre><code><span class="tok-kw">class</span> <span class="tok-type">Button</span> : <span class="tok-kw">public</span> <span class="tok-type">InputObserver</span>
 {
 <span class="tok-kw">public</span>:
-  <span class="tok-comment">// Drag & drop</span>
   <span class="tok-kw">void</span> <span class="tok-fn">SetDraggable</span>(<span class="tok-kw">bool</span> aValue);
   <span class="tok-kw">void</span> <span class="tok-fn">MoveBy</span>(<span class="tok-kw">const</span> Vector2f&amp; delta);
   <span class="tok-kw">bool</span> <span class="tok-fn">IsDragging</span>() <span class="tok-kw">const</span>;
-
-  <span class="tok-comment">// Visibility & parenting</span>
   <span class="tok-kw">void</span> <span class="tok-fn">SetVisible</span>(<span class="tok-kw">bool</span> v) { myIsVisible = v; }
   <span class="tok-kw">void</span> <span class="tok-fn">AddChild</span>(Button* child);
   Button* <span class="tok-fn">GetParent</span>() <span class="tok-kw">const</span>;
-
-  <span class="tok-comment">// Camera & input</span>
   <span class="tok-kw">virtual void</span> <span class="tok-fn">SetCamera</span>(shared_ptr&lt;Camera&gt; cam);
   <span class="tok-kw">virtual void</span> <span class="tok-fn">RegisterInput</span>() <span class="tok-kw">override</span>;
   <span class="tok-kw">void</span> <span class="tok-fn">DebugDrawBounds</span>(<span class="tok-kw">const</span> Color&amp; color) <span class="tok-kw">const</span>;
-
 <span class="tok-kw">protected</span>:
   <span class="tok-kw">void</span> <span class="tok-fn">SetPosition2D</span>(<span class="tok-kw">const</span> Vector2f&amp; newPos);
   <span class="tok-kw">void</span> <span class="tok-fn">PropagateMoveToChildren</span>(<span class="tok-kw">const</span> Vector2f&amp; delta);
-
   <span class="tok-kw">bool</span> myIsDraggable = <span class="tok-lit">false</span>;
   <span class="tok-kw">bool</span> myIsDragging  = <span class="tok-lit">false</span>;
   Vector2f myDragOffset = { <span class="tok-num">0.f</span>, <span class="tok-num">0.f</span> };
@@ -681,16 +724,10 @@
           <div class="dd-text">
             <span class="dd-step">Step 05 — Child Propagation</span>
             <div class="dd-title">Move Propagates to All Children</div>
-            <p class="dd-desc">When a frame moves, SetPosition2D calculates the delta and calls PropagateMoveToChildren — which recursively repositions every child without touching their text layers. This means a player frame dragged in edit mode automatically carries its portrait, bars, and name text together as one unit.</p>
+            <p class="dd-desc">When a frame moves, SetPosition2D calculates the delta and calls PropagateMoveToChildren — which recursively repositions every child without touching their text layers. A player frame dragged in edit mode automatically carries its portrait, bars, and name text together as one unit.</p>
             <div class="dd-toggle-group">
-              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step5','image',this)">
-                <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
-                Image
-              </button>
-              <button class="dd-toggle-btn" onclick="setMediaMode('media-step5','code',this)">
-                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-                Code
-              </button>
+              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step5','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('media-step5','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
             </div>
           </div>
           <div class="dd-media-panel" id="media-step5">
@@ -701,14 +738,11 @@
 {
   <span class="tok-kw">const</span> Vector2f delta = aNewPos - myPosition;
   myPosition = aNewPos;
-
   <span class="tok-kw">const float</span> z = myTransform.<span class="tok-fn">GetPosition</span>().z;
   mySprite.<span class="tok-fn">SetPosition</span>({ myPosition.x, myPosition.y, z });
   myTransform.<span class="tok-fn">SetPosition</span>({ myPosition.x, myPosition.y, z });
-
   <span class="tok-kw">for</span> (<span class="tok-kw">auto</span>&amp; t : myTexts)
     t.<span class="tok-fn">SetPosition</span>(t.<span class="tok-fn">GetPosition</span>() + delta);
-
   <span class="tok-fn">PropagateMoveToChildren</span>(delta);
 }
 
@@ -726,22 +760,13 @@
 
         <div class="dd-block reverse">
           <div class="dd-text">
-            <span class="dd-step">Step 06 — Drag & Drop</span>
+            <span class="dd-step">Step 06 — Drag &amp; Drop</span>
             <div class="dd-title">Grab-Point-Accurate Dragging</div>
             <p class="dd-desc">When a draggable frame receives a left-click while hovered, it enters drag mode and stores the cursor offset from the frame centre. Every subsequent hover event moves the frame to cursor minus offset — giving smooth, grab-point-accurate dragging regardless of where you click the frame.</p>
             <div class="dd-toggle-group">
-              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step6','image',this)">
-                <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
-                Image
-              </button>
-              <button class="dd-toggle-btn" onclick="setMediaMode('media-step6','video',this)">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                Video
-              </button>
-              <button class="dd-toggle-btn" onclick="setMediaMode('media-step6','code',this)">
-                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-                Code
-              </button>
+              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step6','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('media-step6','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('media-step6','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
             </div>
           </div>
           <div class="dd-media-panel" id="media-step6">
@@ -753,22 +778,17 @@
 {
   Vector2f mousePos =
     myCamera-&gt;<span class="tok-fn">GetScreenToWorldCoordinatesVec2</span>(mouseScreenPos);
-
-  <span class="tok-comment">// If dragging: move frame to cursor position</span>
   <span class="tok-kw">if</span> (myIsDragging)
   {
     <span class="tok-fn">SetPosition2D</span>(mousePos - myDragOffset);
     <span class="tok-kw">break</span>;
   }
-  <span class="tok-comment">// ... normal hover check ...</span>
 }
-
 <span class="tok-kw">case</span> InputEvent::MenuLClick:
 {
   <span class="tok-kw">if</span> (myIsDraggable &amp;&amp; myIsHovered)
   {
     myIsDragging = <span class="tok-lit">true</span>;
-    <span class="tok-comment">// Store offset so frame doesn't snap to cursor centre</span>
     myDragOffset = mousePos - myPosition;
   }
 }</code></pre>
@@ -780,30 +800,21 @@
           <div class="dd-text">
             <span class="dd-step">Step 07 — Grid Snap</span>
             <div class="dd-title">Configurable Snap-to-Grid System</div>
-            <p class="dd-desc">When snap-to-grid is enabled, every slot position is rounded to the nearest grid cell before being applied. The grid size is configurable via a live slider (25–200px, snaps to 5px increments). A single ApplySnap function handles all the rounding math — clean and reusable across every frame type.</p>
+            <p class="dd-desc">When snap-to-grid is enabled, every slot position is rounded to the nearest grid cell before being applied. The grid size is configurable via a live slider (25–200px, snaps to 5px increments). A single ApplySnap function handles all the rounding math.</p>
             <div class="dd-toggle-group">
-              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step7','image',this)">
-                <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
-                Image
-              </button>
-              <button class="dd-toggle-btn" onclick="setMediaMode('media-step7','code',this)">
-                <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-                Code
-              </button>
+              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step7','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('media-step7','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
             </div>
           </div>
           <div class="dd-media-panel" id="media-step7">
             <img src="Images/HUD/Configurable_Snap-to-Grid_System_picture.png" alt="Grid Snap">
             <div class="dd-code-view">
               <div class="dd-code-header"><span class="dd-code-filename">ActionBar.cpp</span><span class="dd-code-lang">C++</span></div>
-              <pre><code><span class="tok-comment">// During layout rebuild — apply snap if enabled</span>
-Vector2f p = <span class="tok-fn">GetSlotPos</span>(i);
+              <pre><code>Vector2f p = <span class="tok-fn">GetSlotPos</span>(i);
 <span class="tok-kw">if</span> (myLayout.snapToGrid)
   p = <span class="tok-fn">ApplySnap</span>(p);
-
 slot-&gt;<span class="tok-fn">SetPosition</span>(p);
 
-<span class="tok-comment">// Snap function — rounds to nearest grid cell</span>
 Vector2f ActionBar::<span class="tok-fn">ApplySnap</span>(<span class="tok-kw">const</span> Vector2f&amp; p) <span class="tok-kw">const</span>
 {
   <span class="tok-kw">const float</span> g = std::<span class="tok-fn">max</span>(<span class="tok-num">1.f</span>, myLayout.gridSize);
@@ -812,9 +823,6 @@ Vector2f ActionBar::<span class="tok-fn">ApplySnap</span>(<span class="tok-kw">c
     std::<span class="tok-fn">round</span>(p.y / g) * g
   };
 }
-
-<span class="tok-comment">// Slider snaps to 5px increments (25–200px range)</span>
-s.gridSize = minG + t * (maxG - minG);
 s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="tok-num">5.f</span>) * <span class="tok-num">5.f</span>;</code></pre>
             </div>
           </div>
@@ -824,16 +832,10 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
           <div class="dd-text">
             <span class="dd-step">Step 08 — Action Bar Editor</span>
             <div class="dd-title">Per-Bar Layout Control</div>
-            <p class="dd-desc">Each action bar has its own edit popup — orientation (horizontal/vertical), number of rows, number of icons, icon size (with a live px slider), icon padding, and an "Always Show Buttons" toggle. Changes apply immediately to the bar's layout. Bars can be dragged freely in edit mode and snap to each other, allowing players to stack them or spread them anywhere on screen.</p>
+            <p class="dd-desc">Each action bar has its own edit popup — orientation, number of rows, number of icons, icon size, icon padding, and an "Always Show Buttons" toggle. Changes apply immediately. Bars can be dragged freely in edit mode and snap to each other.</p>
             <div class="dd-toggle-group">
-              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step8','image',this)">
-                <svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>
-                Image
-              </button>
-              <button class="dd-toggle-btn" onclick="setMediaMode('media-step8','video',this)">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                Video
-              </button>
+              <button class="dd-toggle-btn active" onclick="setMediaMode('media-step8','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('media-step8','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
             </div>
           </div>
           <div class="dd-media-panel" id="media-step8">
@@ -844,79 +846,57 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
 
         <div class="dd-block">
           <div class="dd-text">
-            <span class="dd-step">Step 09 — Spellbook & Tooltips</span>
-            <div class="dd-title">Spell Assignment & Rich Tooltips</div>
-            <p class="dd-desc">Clicking an empty action bar slot opens the spellbook popup showing all available spells as icon buttons. Clicking a spell assigns it to that slot and closes the spellbook. Hovering a filled slot shows a rich tooltip: spell name, mana cost, cast time (or "Instant cast"), and a damage description line. Spells have cooldowns, cast times, and trigger buffs/debuffs on the HUD when used.</p>
+            <span class="dd-step">Step 09 — Spellbook &amp; Tooltips</span>
+            <div class="dd-title">Spell Assignment &amp; Rich Tooltips</div>
+            <p class="dd-desc">Clicking an empty action bar slot opens the spellbook popup showing all available spells as icon buttons. Hovering a filled slot shows a rich tooltip: spell name, mana cost, cast time (or "Instant cast"), and a damage description. Spells have cooldowns, cast times, and trigger buffs/debuffs on the HUD when used.</p>
           </div>
           <div class="dd-media-panel">
             <img src="Images/HUD/Spell_tooltip_popup.png" alt="Spell Tooltip">
           </div>
         </div>
-
-    </div><!-- /deep-dive -->
+      </div>
 
       <div class="p-section">
         <h2>Feature Showcase</h2>
         <div class="hud-feature-grid">
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Normal_view.png')"><img src="Images/HUD/Normal_view.png" alt="Normal View"><div class="hud-feature-caption">Normal Gameplay View</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Edit_mode_view.png')"><img src="Images/HUD/Edit_mode_view.png" alt="Edit Mode"><div class="hud-feature-caption">HUD Edit Mode</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Normal_view.png')"><img src="Images/HUD/Normal_view.png" alt="Normal View"><div class="hud-feature-caption">Normal View</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Edit_mode_view.png')"><img src="Images/HUD/Edit_mode_view.png" alt="Edit Mode"><div class="hud-feature-caption">Edit Mode</div></div>
           <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Editmode_Advanced_options.png')"><img src="Images/HUD/Editmode_Advanced_options.png" alt="Advanced Options"><div class="hud-feature-caption">Advanced Options</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Editmode_normal_options.png')"><img src="Images/HUD/Editmode_normal_options.png" alt="Normal Options"><div class="hud-feature-caption">Normal Options Panel</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Editmode_normal_options.png')"><img src="Images/HUD/Editmode_normal_options.png" alt="Normal Options"><div class="hud-feature-caption">Normal Options</div></div>
           <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/button_code.png')"><img src="Images/HUD/button_code.png" alt="Button Code"><div class="hud-feature-caption">Button Base Class</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Chose_spellPopup.png')"><img src="Images/HUD/Chose_spellPopup.png" alt="Spellbook"><div class="hud-feature-caption">Spellbook Popup</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Spell_tooltip_popup.png')"><img src="Images/HUD/Spell_tooltip_popup.png" alt="Spell Tooltip"><div class="hud-feature-caption">Spell Tooltip</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/ActionBar_editmode_popup.png')"><img src="Images/HUD/ActionBar_editmode_popup.png" alt="Action Bar Popup"><div class="hud-feature-caption">Action Bar Edit Popup</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Configurable_Snap-to-Grid_System_picture.png')"><img src="Images/HUD/Configurable_Snap-to-Grid_System_picture.png" alt="Grid Snap"><div class="hud-feature-caption">Snap-to-Grid System</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Grab-Point_picture.png')"><img src="Images/HUD/Grab-Point_picture.png" alt="Grab Point"><div class="hud-feature-caption">Grab-Point Dragging</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Chose_spellPopup.png')"><img src="Images/HUD/Chose_spellPopup.png" alt="Spellbook"><div class="hud-feature-caption">Spellbook</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Spell_tooltip_popup.png')"><img src="Images/HUD/Spell_tooltip_popup.png" alt="Tooltip"><div class="hud-feature-caption">Spell Tooltip</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/ActionBar_editmode_popup.png')"><img src="Images/HUD/ActionBar_editmode_popup.png" alt="Action Bar"><div class="hud-feature-caption">Action Bar Editor</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Configurable_Snap-to-Grid_System_picture.png')"><img src="Images/HUD/Configurable_Snap-to-Grid_System_picture.png" alt="Grid Snap"><div class="hud-feature-caption">Grid Snap</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Grab-Point_picture.png')"><img src="Images/HUD/Grab-Point_picture.png" alt="Grab Point"><div class="hud-feature-caption">Grab-Point</div></div>
           <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Move_Propagates_picture.png')"><img src="Images/HUD/Move_Propagates_picture.png" alt="Move Propagation"><div class="hud-feature-caption">Move Propagation</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Move_Propagates_to_All_Children.png')"><img src="Images/HUD/Move_Propagates_to_All_Children.png" alt="Child Propagation"><div class="hud-feature-caption">Propagates to All Children</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Playerframe_editmode.png')"><img src="Images/HUD/Playerframe_editmode.png" alt="Player Frame"><div class="hud-feature-caption">Player Frame Scale</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Targetframe_editmode.png')"><img src="Images/HUD/Targetframe_editmode.png" alt="Target Frame"><div class="hud-feature-caption">Target Frame Scale</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Partyframes_editmode.png')"><img src="Images/HUD/Partyframes_editmode.png" alt="Party Frames"><div class="hud-feature-caption">Party Frame Settings</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Drag_&_Drop_handling.png')"><img src="Images/HUD/Drag_&_Drop_handling.png" alt="Drag and Drop"><div class="hud-feature-caption">Drag & Drop Handling</div></div>
-          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Grid_Snap_System.png')"><img src="Images/HUD/Grid_Snap_System.png" alt="Grid Snap System"><div class="hud-feature-caption">Grid Snap System</div></div>
+          <div class="hud-feature-tile" onclick="openHudLightbox('Images/HUD/Drag_&_Drop_handling.png')"><img src="Images/HUD/Drag_&_Drop_handling.png" alt="Drag Drop"><div class="hud-feature-caption">Drag &amp; Drop</div></div>
         </div>
       </div>
-
-    </div><!-- /p-body -->
-
+    </div>
     <footer>&copy; 2026 Alexander Englesson &nbsp;·&nbsp; Game Programmer &nbsp;·&nbsp; Stockholm</footer>
-  </div><!-- /hud-screen -->
+  </div>
 
-  <!-- ████████  TOOLS / PARTICLE SCREEN  ████████ -->
+  <!-- ████ TOOLS SCREEN ████ -->
   <div id="tools-screen">
     <nav id="tools-nav">
-      <div class="nav-identity">
-        <span class="nav-name">Alexander Englesson</span>
-        <span class="nav-title">Game Systems Programmer</span>
-      </div>
-      <div class="nav-links">
-        <button class="back-btn" id="toolsBackBtn">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-          Home
-        </button>
+      <div class="nav-identity"><span class="nav-name">Alexander Englesson</span><span class="nav-title">Game Systems Programmer</span></div>
+      <div class="nav-links nav-links-desktop">
+        <button class="back-btn" id="toolsBackBtn"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Home</button>
         <button class="back-btn" id="toolsBackBtnAbout">About Me</button>
         <button class="back-btn" id="toolsBackBtnContact">Contact</button>
       </div>
-      <div class="nav-actions">
-        <a href="https://github.com/yourusername" target="_blank" class="nav-icon" title="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-        </a>
-        <a href="Alexander_Englesson_CV.pdf" download class="nav-resume">
-          Resume
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-        </a>
+      <div class="nav-actions nav-actions-desktop">
+        <a href="Alexander_Englesson_CV.pdf" download class="nav-resume">Resume<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></a>
       </div>
+      <button class="hamburger" id="hamburger-tools" aria-label="Menu" onclick="toggleMobileMenu('tools')">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
 
     <div class="tools-hero">
       <video src="Partikel_system_main.mp4" muted loop playsinline autoplay></video>
-      <div class="tools-hero-overlay">
-        <div>
-          <div class="p-tag">Tools</div>
-          <h1>Particle & VFX Editor</h1>
-        </div>
-      </div>
+      <div class="tools-hero-overlay"><div><div class="p-tag">Tools</div><h1>Particle &amp; VFX Editor</h1></div></div>
     </div>
 
     <div class="p-body">
@@ -930,318 +910,179 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
 
       <div class="p-section">
         <h2>Overview</h2>
-        <p>
-          I built a full particle and VFX authoring system in C++ integrated directly into our custom engine (TGE). The system covers everything from the data layer — a serialisable <code>ParticleEmitterData</code> struct with 7 spawn shapes, burst emission, sub-emitters, and world collision — through to a live ImGui editor where artists can edit over-lifetime curves for colour (R/G/B/A independently), size, velocity per axis, and rotation, and see results in-engine immediately. Particle parameters flow end-to-end from the editor into the runtime update loop and out through the pixel and vertex shaders.
-        </p>
+        <p>I built a full particle and VFX authoring system in C++ integrated directly into our custom engine (TGE). The system covers everything from the data layer — a serialisable <code>ParticleEmitterData</code> struct with 7 spawn shapes, burst emission, sub-emitters, and world collision — through to a live ImGui editor where artists can edit over-lifetime curves for colour (R/G/B/A independently), size, velocity per axis, and rotation, and see results in-engine immediately.</p>
       </div>
 
       <div class="p-section">
         <h2>My Role &amp; Responsibilities</h2>
-        <p>
-          I designed and implemented the entire system — data architecture, serialisation, runtime particle update, ImGui editor UI, sub-emitter support, PhysX collision integration, and shader wiring. The goal was to make it production-usable: artists and designers could open the editor, tune an effect, and see it running in the scene without touching code or waiting for a rebuild.
-        </p>
+        <p>I designed and implemented the entire system — data architecture, serialisation, runtime particle update, ImGui editor UI, sub-emitter support, PhysX collision integration, and shader wiring. The goal was to make it production-usable: artists and designers could open the editor, tune an effect, and see it running in the scene without touching code.</p>
         <div class="p-chips">
-          <span class="chip">C++</span>
-          <span class="chip">ImGui</span>
-          <span class="chip">Particle Systems</span>
-          <span class="chip">Curve Editor</span>
-          <span class="chip">JSON Serialisation</span>
-          <span class="chip">Sub-Emitters</span>
-          <span class="chip">PhysX Raycasting</span>
-          <span class="chip">Shader Integration</span>
-          <span class="chip">VFX Workflow</span>
-          <span class="chip">Custom Engine (TGE)</span>
+          <span class="chip">C++</span><span class="chip">ImGui</span><span class="chip">Particle Systems</span>
+          <span class="chip">Curve Editor</span><span class="chip">JSON Serialisation</span><span class="chip">Sub-Emitters</span>
+          <span class="chip">PhysX Raycasting</span><span class="chip">Shader Integration</span><span class="chip">VFX Workflow</span><span class="chip">TGE</span>
         </div>
       </div>
 
       <div class="p-section">
         <h2>Technical Highlights</h2>
-        <p>
-          The core design challenge was keeping the editor and runtime in perfect sync. Every over-lifetime curve — colour channels R, G, B, A, size, velocity X/Y/Z, and rotation — is stored as a <code>std::vector&lt;CurveKey&gt;</code> inside <code>ParticleEmitterData</code>, serialised to JSON, and evaluated identically in both the editor preview and the runtime particle update. The entire data structure is wrapped in a <code>CopyOnWriteWrapper</code> so edits in the ImGui panel don't cause unnecessary copies until a value actually changes. World collision is handled by casting a PhysX ray from each particle's previous position to its current one every frame — on hit, a configurable decal TGO is spawned at the contact point and the particle can be set to die immediately or continue.
-        </p>
+        <p>The core design challenge was keeping the editor and runtime in perfect sync. Every over-lifetime curve is stored as a <code>std::vector&lt;CurveKey&gt;</code> inside <code>ParticleEmitterData</code>, serialised to JSON, and evaluated identically in both editor preview and runtime. The entire data structure is wrapped in a <code>CopyOnWriteWrapper</code> so edits don't cause unnecessary copies until a value actually changes. World collision is handled by casting a PhysX ray from each particle's previous position to its current one every frame — on hit, a configurable decal TGO is spawned at the contact point.</p>
       </div>
 
       <div class="deep-dive">
         <h2>Development Breakdown</h2>
 
-      <!-- Step 01 — First Particle -->
-      <div class="dd-block">
-        <div class="dd-text">
-          <span class="dd-step">Step 01 — First Particle</span>
-          <div class="dd-title">One Particle, End-to-End</div>
-          <p class="dd-desc">
-            Before any systems existed, I proved the full pipeline end-to-end with a single hardcoded particle. The first non-obvious discovery: sprite size must be written directly into mySize on the instance data every frame — transform matrix scale has no effect on sprites. Getting this right on one particle meant everything built after it stood on a correct foundation.
-          </p>
-          <div class="dd-toggle-group">
-            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-1','code',this)">
-              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-              Code
-            </button>
-            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-1','video',this)">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              Video
-            </button>
+        <div class="dd-block">
+          <div class="dd-text">
+            <span class="dd-step">Step 01 — First Particle</span>
+            <div class="dd-title">One Particle, End-to-End</div>
+            <p class="dd-desc">Before any systems existed, I proved the full pipeline end-to-end with a single hardcoded particle. The first non-obvious discovery: sprite size must be written directly into mySize on the instance data every frame — transform matrix scale has no effect on sprites.</p>
+            <div class="dd-toggle-group">
+              <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-1','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-1','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
+            </div>
+          </div>
+          <div class="dd-media-panel show-video" id="ptool-media-1">
+            <video src="Partikel_system_1.mp4" muted loop playsinline></video>
+            <div class="dd-code-view">
+              <div class="dd-code-header"><span class="dd-code-filename">ParticleEmitter.cpp</span><span class="dd-code-lang">C++</span></div>
+              <pre><code><span class="tok-comment">// Size must go into instance data — NOT the transform</span>
+<span class="tok-kw">float</span> size = <span class="tok-num">1.f</span>;
+<span class="tok-kw">if</span> (!aEmitter.data.sizeOverLifetime.<span class="tok-fn">empty</span>())
+    size = aEmitter.data.sizeOverLifetime.<span class="tok-fn">front</span>().value;
+
+<span class="tok-kw">auto</span> spriteInst = std::<span class="tok-fn">make_shared</span>&lt;Tga::Sprite3DInstanceData&gt;();
+spriteInst-&gt;mySize = { size, size }; <span class="tok-comment">// ← only way</span>
+spriteInst-&gt;myColor = { <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span> };
+spriteInst-&gt;myTransform = t;</code></pre>
+            </div>
           </div>
         </div>
-      <div class="dd-media-panel show-video" id="ptool-media-1">
-          <video src="Partikel_system_1.mp4" muted loop playsinline></video>
-          <div class="dd-code-view">
-            <div class="dd-code-header">
-              <span class="dd-code-filename">ParticleEmitter.cpp — SpawnParticle(SubEmitter&)</span>
-              <span class="dd-code-lang">C++</span>
+
+        <div class="dd-block reverse">
+          <div class="dd-text">
+            <span class="dd-step">Step 02 — Live Editor Preview</span>
+            <div class="dd-title">Particles Playing Inside the Editor</div>
+            <p class="dd-desc">With one particle working, I integrated live preview into the TGE editor. A critical bug: storing only the VFXInstance shared_ptr lets the owning GameObject go out of scope, leaving an internal pointer dangling and crashing on UpdateTransform(). Storing both together in a PreviewVFXEntry solved it.</p>
+            <div class="dd-toggle-group">
+              <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-2','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-2','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
             </div>
-            <pre><code><span class="tok-comment">// Size must go directly into instance data — NOT the transform</span>
-      <span class="tok-kw">float</span> size = <span class="tok-num">1.f</span>;
-      <span class="tok-kw">if</span> (!aEmitter.data.sizeOverLifetime.<span class="tok-fn">empty</span>())
-          size = aEmitter.data.sizeOverLifetime.<span class="tok-fn">front</span>().value;
+          </div>
+          <div class="dd-media-panel show-video" id="ptool-media-2">
+            <video src="Partikel_system_2.mp4" muted loop playsinline></video>
+            <div class="dd-code-view">
+              <div class="dd-code-header"><span class="dd-code-filename">PreviewParticleSystem.h</span><span class="dd-code-lang">C++</span></div>
+              <pre><code><span class="tok-kw">struct</span> <span class="tok-type">PreviewVFXEntry</span>
+{
+    std::shared_ptr&lt;<span class="tok-type">GameObject</span>&gt;  go;
+    std::shared_ptr&lt;<span class="tok-type">VFXInstance</span>&gt; vfxInst;
+};</code></pre>
+            </div>
+          </div>
+        </div>
 
-      <span class="tok-kw">auto</span> spriteInst = std::<span class="tok-fn">make_shared</span>&lt;Tga::Sprite3DInstanceData&gt;();
-      spriteInst-&gt;mySize = { size, size }; <span class="tok-comment">// ← this is the only way</span>
-      spriteInst-&gt;myColor = { <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span>, <span class="tok-num">1.f</span> };
-      spriteInst-&gt;myTransform = t;
+        <div class="dd-block">
+          <div class="dd-text">
+            <span class="dd-step">Step 03 — Data Architecture</span>
+            <div class="dd-title">ParticleEmitterData — The Foundation</div>
+            <p class="dd-desc">The entire system is driven by a single ParticleEmitterData struct — spawn shape, rate, burst schedules, gravity, colour ranges, direction spread, collision flags, and sub-emitters. The struct serialises fully to and from JSON.</p>
+            <div class="dd-toggle-group">
+              <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-3','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-3','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
+            </div>
+          </div>
+          <div class="dd-media-panel show-video" id="ptool-media-3">
+            <video src="Partikel_system_3.mp4" muted loop playsinline></video>
+            <div class="dd-code-view">
+              <div class="dd-code-header"><span class="dd-code-filename">VFXinfo.h</span><span class="dd-code-lang">C++</span></div>
+              <pre><code><span class="tok-kw">struct</span> <span class="tok-type">ParticleEmitterData</span>
+{
+    std::string emitterName = <span class="tok-lit">"Emitter 0"</span>;
+    std::vector&lt;<span class="tok-type">ParticleEmitterData</span>&gt; subEmitters;
+    <span class="tok-kw">float</span> lifetime = <span class="tok-num">1.f</span>;
+    <span class="tok-kw">float</span> spawnRate = <span class="tok-num">10.f</span>;
+    <span class="tok-kw">float</span> gravityScale = <span class="tok-num">0.f</span>;
+    <span class="tok-kw">bool</span>  looping = <span class="tok-lit">true</span>;
+    <span class="tok-kw">enum class</span> <span class="tok-type">SpawnShape</span> : uint8_t
+        { Point, Sphere, HollowSphere, Cone, Box, Circle, Edge };
+    SpawnShape spawnShape = SpawnShape::Point;
+    <span class="tok-kw">bool</span> collideWithWorld = <span class="tok-lit">false</span>;
+    <span class="tok-kw">bool</span> spawnDecalOnCollision = <span class="tok-lit">false</span>;
+    <span class="tok-kw">bool</span> dieOnCollision = <span class="tok-lit">true</span>;
+};</code></pre>
+            </div>
+          </div>
+        </div>
 
-      <span class="tok-comment">// VFXInstance drives all over-lifetime curves each frame</span>
-      <span class="tok-kw">auto</span> vfx = go-&gt;<span class="tok-fn">AddComponent</span>&lt;VFXInstance&gt;();
-      vfx-&gt;<span class="tok-fn">Init</span>();
-      vfx-&gt;<span class="tok-fn">SetType</span>(VFXType::Sprite);
-      vfx-&gt;<span class="tok-fn">SetShouldLoop</span>(<span class="tok-lit">false</span>);
-      vfx-&gt;<span class="tok-fn">SetLifeTime</span>(aEmitter.data.lifetime);
-      vfx-&gt;<span class="tok-fn">SetTransform</span>(t);
-      vfx-&gt;<span class="tok-fn">SetSpawnedTime</span>(Tga::Engine::<span class="tok-fn">GetInstance</span>()-&gt;<span class="tok-fn">GetTotalTime</span>());</code></pre>
+        <div class="dd-block reverse">
+          <div class="dd-text">
+            <span class="dd-step">Step 04 — Curve System</span>
+            <div class="dd-title">11 Independent Over-Lifetime Channels</div>
+            <p class="dd-desc">Rather than simple min/max scalars, I built 11 independent over-lifetime curve channels: colour R, G, B, A, size, velocity X/Y/Z, and rotation. Velocity curves are baked at spawn time against the particle's initial direction vector so direction spread and spawn shape interact correctly without recomputing direction every frame.</p>
+            <div class="dd-toggle-group">
+              <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-4','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-4','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
+            </div>
+          </div>
+          <div class="dd-media-panel show-video" id="ptool-media-4">
+            <video src="Partikel_System_5.mp4" muted loop playsinline></video>
+            <div class="dd-code-view">
+              <div class="dd-code-header"><span class="dd-code-filename">ParticleEmitter.cpp</span><span class="dd-code-lang">C++</span></div>
+              <pre><code><span class="tok-comment">// Velocity baked at spawn — dir computed once from spawn shape</span>
+<span class="tok-kw">auto</span> <span class="tok-fn">BuildVelocityCurve</span> = [&amp;](
+    <span class="tok-kw">const</span> std::vector&lt;Tga::CurveKey&gt;&amp; keys,
+    <span class="tok-kw">float</span> dirComponent) -&gt; std::vector&lt;<span class="tok-type">Curve</span>&gt;
+{
+    <span class="tok-kw">if</span> (!keys.<span class="tok-fn">empty</span>())
+    {
+        std::vector&lt;<span class="tok-type">Curve</span>&gt; out;
+        <span class="tok-kw">for</span> (<span class="tok-kw">auto</span>&amp; k : keys)
+            out.<span class="tok-fn">push_back</span>({ k.time, k.value * dirComponent });
+        <span class="tok-kw">return</span> out;
+    }
+    <span class="tok-kw">return</span> {};
+};</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="dd-block">
+          <div class="dd-text">
+            <span class="dd-step">Step 05 — World Collision &amp; Decals</span>
+            <div class="dd-title">Per-Particle PhysX Raycasting</div>
+            <p class="dd-desc">When collision is enabled, every live particle casts a PhysX ray from its previous position to its current one each frame. On hit, the particle can die immediately or continue — and if Spawn Decal on Collision is enabled, a configurable TGO asset spawns at the exact contact point.</p>
+            <div class="dd-toggle-group">
+              <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-5','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
+              <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-5','code',this)"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>Code</button>
+            </div>
+          </div>
+          <div class="dd-media-panel show-video" id="ptool-media-5">
+            <video src="partikel_system_decal.mp4" muted loop playsinline></video>
+            <div class="dd-code-view">
+              <div class="dd-code-header"><span class="dd-code-filename">ParticleEmitter.cpp — Update()</span><span class="dd-code-lang">C++</span></div>
+              <pre><code>physx::PxVec3 origin = { prevPos.x, prevPos.y, prevPos.z };
+physx::PxVec3 delta  = { pos.x-prevPos.x,
+                          pos.y-prevPos.y,
+                          pos.z-prevPos.z };
+<span class="tok-kw">if</span> (dist &gt; <span class="tok-num">0.001f</span>)
+{
+    physx::PxRaycastBuffer hit;
+    <span class="tok-kw">if</span> (globalCurrentPxScene-&gt;<span class="tok-fn">raycast</span>(origin, dir, dist, hit))
+    {
+        <span class="tok-kw">if</span> (emitter.data.spawnDecalOnCollision)
+            GameWorld::<span class="tok-fn">GetInstance</span>().<span class="tok-fn">LoadAssetToScene</span>(
+                emitter.data.collisionTgoName, hitTransform, <span class="tok-lit">true</span>);
+        <span class="tok-kw">if</span> (emitter.data.dieOnCollision)
+            vfx-&gt;<span class="tok-fn">ForceExpire</span>();
+    }
+}</code></pre>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- Step 02 — Live Editor Preview -->
-      <div class="dd-block reverse">
-        <div class="dd-text">
-          <span class="dd-step">Step 02 — Live Editor Preview</span>
-          <div class="dd-title">Particles Playing Inside the Editor</div>
-          <p class="dd-desc">
-            With one particle working, I integrated live preview into the TGE editor — first in the ObjectDefinitionDocument for single-asset preview, then in the SceneDocument so emitters play at their correct world-space positions. A critical bug I hit early: storing only the VFXInstance shared_ptr lets the owning GameObject go out of scope, leaving an internal pointer dangling and crashing on UpdateTransform(). Storing both together in a PreviewVFXEntry solved it.
-          </p>
-          <div class="dd-toggle-group">
-            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-2','code',this)">
-              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-              Code
-            </button>
-            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-2','video',this)">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              Video
-            </button>
-          </div>
-        </div>
-<div class="dd-media-panel show-video" id="ptool-media-2">
-          <video src="Partikel_system_2.mp4" muted loop playsinline></video>
-          <div class="dd-code-view">
-            <div class="dd-code-header">
-              <span class="dd-code-filename">PreviewParticleSystem.h — PreviewVFXEntry</span>
-              <span class="dd-code-lang">C++</span>
-            </div>
-            <pre><code><span class="tok-comment">// Storing ONLY VFXInstance is not enough —</span>
-      <span class="tok-comment">// the GO must stay alive or VFXInstance::myGameObject dangles</span>
-      <span class="tok-kw">struct</span> <span class="tok-type">PreviewVFXEntry</span>
-      {
-          std::shared_ptr&lt;<span class="tok-type">GameObject</span>&gt;  go;      <span class="tok-comment">// keeps GO alive</span>
-          std::shared_ptr&lt;<span class="tok-type">VFXInstance</span>&gt; vfxInst; <span class="tok-comment">// drives curves</span>
-      };
-
-      <span class="tok-comment">// SceneDocument — per-emitter world-space spawn</span>
-      <span class="tok-kw">const</span> Tga::Vector3f emitterWorldPos =
-          sceneObj-&gt;<span class="tok-fn">GetPosition</span>();
-
-      Tga::Vector3f spawnPos =
-          emitterWorldPos + spawnResult.offset;
-
-      <span class="tok-comment">// Each Tag::Particle object gets its own entry</span>
-      <span class="tok-comment">// in three maps: emitter state, particle list, VFX entries</span>
-      myPreviewParticles[id].<span class="tok-fn">push_back</span>(pp);
-      myPreviewEmitters[id]  = emitter;
-      myPreviewVFXInstances[id] = entry;</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 03 — Data Architecture -->
-      <div class="dd-block">
-        <div class="dd-text">
-          <span class="dd-step">Step 03 — Data Architecture</span>
-          <div class="dd-title">ParticleEmitterData — The Foundation of Everything</div>
-          <p class="dd-desc">
-            The entire system is driven by a single ParticleEmitterData struct — spawn shape, rate, burst schedules, gravity, colour ranges, direction spread, collision flags, and sub-emitters. The struct serialises fully to and from JSON, so emitter setups save, reload, and share between scenes without any code changes.
-          </p>
-          <div class="dd-toggle-group">
-            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-3','code',this)">
-              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-              Code
-            </button>
-            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-3','video',this)">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              Video
-            </button>
-          </div>
-        </div>
-<div class="dd-media-panel show-video" id="ptool-media-3">
-          <video src="Partikel_system_3.mp4" muted loop playsinline></video>
-          <div class="dd-code-view">
-            <div class="dd-code-header">
-              <span class="dd-code-filename">VFXinfo.h — ParticleEmitterData</span>
-              <span class="dd-code-lang">C++</span>
-            </div>
-            <pre><code><span class="tok-kw">struct</span> <span class="tok-type">ParticleEmitterData</span>
-      {
-          std::string emitterName = <span class="tok-lit">"Emitter 0"</span>;
-          std::vector&lt;<span class="tok-type">ParticleEmitterData</span>&gt; subEmitters; <span class="tok-comment">// child emitters</span>
-
-          Tga::StringId texturePath;
-          <span class="tok-kw">float</span>         lifetime    = <span class="tok-num">1.f</span>;
-          <span class="tok-kw">float</span>         spawnRate   = <span class="tok-num">10.f</span>;
-          <span class="tok-kw">float</span>         gravityScale = <span class="tok-num">0.f</span>;
-          <span class="tok-kw">bool</span>          looping     = <span class="tok-lit">true</span>;
-          <span class="tok-kw">float</span>         warmupTime  = <span class="tok-num">0.f</span>; <span class="tok-comment">// pre-simulate on spawn</span>
-
-          <span class="tok-comment">// 7 spawn shapes — each with shape-specific params</span>
-          <span class="tok-kw">enum class</span> <span class="tok-type">SpawnShape</span> : uint8_t
-              { Point, Sphere, HollowSphere, Cone, Box, Circle, Edge };
-          SpawnShape spawnShape = SpawnShape::Point;
-
-          <span class="tok-comment">// Burst emission — multiple bursts, each with cycles</span>
-          <span class="tok-kw">struct</span> <span class="tok-type">Burst</span> {
-              <span class="tok-kw">float</span> time; <span class="tok-kw">int</span> count; <span class="tok-kw">int</span> cycles; <span class="tok-kw">float</span> interval;
-          };
-          std::vector&lt;<span class="tok-type">Burst</span>&gt; bursts;
-
-          <span class="tok-comment">// Collision — PhysX raycast per particle per frame</span>
-          <span class="tok-kw">bool</span>          collideWithWorld      = <span class="tok-lit">false</span>;
-          <span class="tok-kw">bool</span>          spawnDecalOnCollision = <span class="tok-lit">false</span>;
-          <span class="tok-kw">bool</span>          dieOnCollision        = <span class="tok-lit">true</span>;
-          Tga::StringId collisionTgoName;
-      };</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 04 — Curve System -->
-      <div class="dd-block reverse">
-        <div class="dd-text">
-          <span class="dd-step">Step 04 — Curve System</span>
-          <div class="dd-title">11 Independent Over-Lifetime Channels</div>
-          <p class="dd-desc">
-            Rather than simple min/max scalars, I built 11 independent over-lifetime curve channels: colour R, G, B, A, size, velocity X/Y/Z, and rotation. Velocity curves are baked at spawn time against the particle's initial direction vector — so direction spread and spawn shape interact correctly without recomputing direction every frame.
-          </p>
-          <div class="dd-toggle-group">
-            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-4','code',this)">
-              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-              Code
-            </button>
-            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-4','video',this)">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              Video
-            </button>
-          </div>
-        </div>
-<div class="dd-media-panel show-video" id="ptool-media-4">
-          <video src="Partikel_System_5.mp4" muted loop playsinline></video>
-          <div class="dd-code-view">
-            <div class="dd-code-header">
-              <span class="dd-code-filename">ParticleEmitter.cpp — SpawnParticle(SubEmitter&)</span>
-              <span class="dd-code-lang">C++</span>
-            </div>
-            <pre><code><span class="tok-comment">// Velocity baked at spawn — dir is computed once from spawn shape</span>
-      <span class="tok-kw">auto</span> <span class="tok-fn">BuildVelocityCurve</span> = [&amp;](
-          <span class="tok-kw">const</span> std::vector&lt;Tga::CurveKey&gt;&amp; keys,
-          <span class="tok-kw">float</span> dirComponent) -&gt; std::vector&lt;<span class="tok-type">Curve</span>&gt;
-      {
-          <span class="tok-kw">if</span> (!keys.<span class="tok-fn">empty</span>())
-          {
-              std::vector&lt;<span class="tok-type">Curve</span>&gt; out;
-              <span class="tok-kw">for</span> (<span class="tok-kw">auto</span>&amp; k : keys)
-                  out.<span class="tok-fn">push_back</span>({ k.time, k.value * dirComponent });
-              <span class="tok-kw">return</span> out;
-          }
-          <span class="tok-kw">return</span> {};
-      };
-
-      <span class="tok-comment">// dir.x/y/z from CalculateParticleSpawn() — shape-aware</span>
-      <span class="tok-kw">auto</span> velX = <span class="tok-fn">BuildVelocityCurve</span>(data.velocityOverLifetimeX, dir.x);
-      <span class="tok-kw">auto</span> velY = <span class="tok-fn">BuildVelocityCurve</span>(data.velocityOverLifetimeY, dir.y);
-      <span class="tok-kw">auto</span> velZ = <span class="tok-fn">BuildVelocityCurve</span>(data.velocityOverLifetimeZ, dir.z);
-
-      <span class="tok-comment">// Colour: 4 independent channels, each a CurveKey vector</span>
-      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeR</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeR, ...));
-      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeG</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeG, ...));
-      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeB</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeB, ...));
-      vfx-&gt;<span class="tok-fn">SetColorOverLifetimeA</span>(<span class="tok-fn">BuildColorCurve</span>(data.colorOverLifetimeA, ...));</code></pre>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 05 — World Collision & Decals -->
-      <div class="dd-block">
-        <div class="dd-text">
-          <span class="dd-step">Step 05 — World Collision &amp; Decals</span>
-          <div class="dd-title">Per-Particle PhysX Raycasting with Decal Spawning</div>
-          <p class="dd-desc">
-            When collision is enabled, every live particle casts a PhysX ray from its previous position to its current one each frame. On hit, the particle can die immediately or continue — and if Spawn Decal on Collision is enabled, a configurable TGO asset spawns at the exact contact point. Collision TGO name and scale are both exposed in the ImGui editor and serialise with the emitter data.
-          </p>
-          <div class="dd-toggle-group">
-            <button class="dd-toggle-btn active" onclick="setMediaMode('ptool-media-5','code',this)">
-              <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-              Code
-            </button>
-            <button class="dd-toggle-btn" onclick="setMediaMode('ptool-media-5','video',this)">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              Video
-            </button>
-          </div>
-        </div>
-<div class="dd-media-panel show-video" id="ptool-media-5">
-          <video src="partikel_system_decal.mp4" muted loop playsinline></video>
-          <div class="dd-code-view">
-            <div class="dd-code-header">
-              <span class="dd-code-filename">ParticleEmitter.cpp — Update()</span>
-              <span class="dd-code-lang">C++</span>
-            </div>
-            <pre><code><span class="tok-comment">// Ray from previous position to current — catches fast-moving particles</span>
-      physx::PxVec3 origin = { prevPos.x, prevPos.y, prevPos.z };
-      physx::PxVec3 delta  = { pos.x - prevPos.x,
-                                pos.y - prevPos.y,
-                                pos.z - prevPos.z };
-      <span class="tok-kw">float</span> dist = <span class="tok-fn">sqrtf</span>(delta.x*delta.x + delta.y*delta.y + delta.z*delta.z);
-
-      <span class="tok-kw">if</span> (dist &gt; <span class="tok-num">0.001f</span>)
-      {
-          physx::PxVec3 dir = { delta.x/dist, delta.y/dist, delta.z/dist };
-          physx::PxRaycastBuffer hit;
-
-          <span class="tok-kw">if</span> (globalCurrentPxScene-&gt;<span class="tok-fn">raycast</span>(origin, dir, dist, hit))
-          {
-              <span class="tok-kw">if</span> (emitter.data.spawnDecalOnCollision)
-              {
-                  Tga::Vector3f hitPos = { hit.block.position.x,
-                                          hit.block.position.y,
-                                          hit.block.position.z };
-                  <span class="tok-comment">// Spawn configurable TGO at exact contact point</span>
-                  GameWorld::<span class="tok-fn">GetInstance</span>().<span class="tok-fn">LoadAssetToScene</span>(
-                      emitter.data.collisionTgoName,
-                      Tga::Matrix4x4f::<span class="tok-fn">CreateFromTranslation</span>(hitPos),
-                      <span class="tok-lit">true</span>);
-              }
-              <span class="tok-kw">if</span> (emitter.data.dieOnCollision)
-                  vfx-&gt;<span class="tok-fn">ForceExpire</span>();
-          }
-      }</code></pre>
-          </div>
-        </div>
-      </div>
-
-   </div><!-- /deep-dive -->
-
-
-    </div><!-- /p-body -->
-
+    </div>
     <footer>&copy; 2026 Alexander Englesson &nbsp;·&nbsp; Game Programmer &nbsp;·&nbsp; Stockholm</footer>
-  </div><!-- /tools-screen -->
+  </div>
 
 </div><!-- /viewport -->
 
@@ -1254,7 +1095,7 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
   <div class="lb-counter" id="lbCounter"></div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const PROJECTS = {
     1: { title:"BugBot",tag:"Group Project",thumb:"Images/Projekt1/Thumbnail_P1_G4.png",video:"Images/Projekt1/trailer.mp4",type:"3D Platformer",tools:"Unity",team:"12 people",duration:"8 weeks",year:"2024", overview:"BugBot is a 3D platformer built in Unity. The gameplay centers around interactive mechanics like rotating objects, elevators, bridges and moving trains.", role:"I worked on player movement, making it feel responsive and polished. I implemented the haystack system — haystacks act as instant kill zones that the player cannot pass through. I built the moving trains which players had to navigate around. I also implemented the DadBot, a drone that flies around and drops care packages containing batteries for the player. Additionally I worked on the ESC system mechanics.", chips:["Gameplay Programming","Player Movement","AI / Drone Behaviour","ESC Systems","Moving Objects","Unity"], tech:"The DadBot was one of the more technically satisfying systems I built — it had to spawn dynamically in front of the player at all times since map sections shifted as the player progressed, making a fixed world position impossible. Once spawned it flew in, followed a sinusoidal curve sideways across the screen, dropped a care package containing batteries, then flew off. Getting that flight path to feel natural and predictable for the player was a rewarding challenge.", shots:["Images/Projekt1/Picture_1_TGA.png","Images/Projekt1/Picture_2_TGA.png","Images/Projekt1/Picture_3_TGA.png","Images/Projekt1/Picture_4_TGA.png","Images/Projekt1/Picture_5_TGA.png","Images/Projekt1/Thumbnail_P1_G4.png"] },
     2: { title:"FrogMent",tag:"Group Project",thumb:"Images/Projekt2/FROGMENT-THUMBNAIL.png",video:"Images/Projekt2/trailer.mp4",type:"Puzzle Platformer",tools:"Custom C++ Engine",team:"12 people",duration:"6 weeks",year:"2024", overview:"FrogMent is a puzzle platformer where a frog can fragment objects to solve puzzles.", role:"Describe your specific contributions to FrogMent here.", chips:["Gameplay Programming","VFX Systems","C++"], tech:"Describe the technical highlights for this project.", shots:["Images/Projekt2/FROGMENT-THUMBNAIL.png"] },
@@ -1267,8 +1108,8 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
   const mainScreen = document.getElementById('main-screen');
   const projScreen = document.getElementById('project-screen');
   const hudScreen  = document.getElementById('hud-screen');
-  const grid       = document.getElementById('projectsGrid');
 
+  // ── MEDIA TOGGLE ──
   function setMediaMode(panelId, mode, btn) {
     const panel = document.getElementById(panelId);
     if (!panel) return;
@@ -1292,68 +1133,158 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     }
   }
 
+  // ── MOBILE MENU (single overlay on body) ──
+  const overlay = document.createElement('div');
+  overlay.id = 'mobile-overlay';
+  overlay.innerHTML = '<div id="mobile-overlay-backdrop"></div><div id="mobile-overlay-panel"></div>';
+  document.body.appendChild(overlay);
+
+  const overlayPanel    = document.getElementById('mobile-overlay-panel');
+  const overlayBackdrop = document.getElementById('mobile-overlay-backdrop');
+  let activeHamburger   = null;
+
+  const MENUS = {
+    main: () => {
+      overlayPanel.innerHTML = `
+        <span class="mm-label">Navigate</span>
+        <a href="#hero"     onclick="closeOverlay(); scrollMainTo()">Home</a>
+        <a href="#projects" onclick="closeOverlay(); setTimeout(()=>{ const el=mainScreen.querySelector('#projects'); if(el) mainScreen.scrollTop=el.offsetTop-60; },50)">Projects</a>
+        <a href="#about"    onclick="closeOverlay(); setTimeout(()=>{ const el=mainScreen.querySelector('#about');    if(el) mainScreen.scrollTop=el.offsetTop-60; },50)">About Me</a>
+        <a href="#contact"  onclick="closeOverlay(); setTimeout(()=>{ const el=mainScreen.querySelector('#contact');  if(el) mainScreen.scrollTop=el.offsetTop-60; },50)">Contact</a>
+        <span class="mm-label">Links</span>
+        <a href="https://github.com/AlexanderEnglessonCODE" target="_blank" onclick="closeOverlay()">GitHub</a>
+        <a href="https://www.linkedin.com/in/alexander-englesson-778099175/" target="_blank" onclick="closeOverlay()">LinkedIn</a>
+        <a href="Alexander_Englesson_CV.pdf" download onclick="closeOverlay()">Download CV</a>
+      `;
+    },
+    project: () => {
+      overlayPanel.innerHTML = `
+        <span class="mm-label">Navigate</span>
+        <button onclick="closeOverlay(); goBack()">← Home</button>
+        <button onclick="closeOverlay(); goBack('projects')">Projects</button>
+        <button onclick="closeOverlay(); goBack('about')">About Me</button>
+        <button onclick="closeOverlay(); goBack('contact')">Contact</button>
+      `;
+    },
+    hud: () => {
+      overlayPanel.innerHTML = `
+        <span class="mm-label">Navigate</span>
+        <button onclick="closeOverlay(); goBackFromHud()">← Home</button>
+        <button onclick="closeOverlay(); goBackFromHud('about')">About Me</button>
+        <button onclick="closeOverlay(); goBackFromHud('contact')">Contact</button>
+      `;
+    },
+    tools: () => {
+      overlayPanel.innerHTML = `
+        <span class="mm-label">Navigate</span>
+        <button onclick="closeOverlay(); goBackFromTools()">← Home</button>
+        <button onclick="closeOverlay(); goBackFromTools('about')">About Me</button>
+        <button onclick="closeOverlay(); goBackFromTools('contact')">Contact</button>
+      `;
+    }
+  };
+
+  function openOverlay(screen, hamburgerEl) {
+    if (activeHamburger && activeHamburger !== hamburgerEl) {
+      activeHamburger.classList.remove('open');
+    }
+    const alreadyOpen = overlay.classList.contains('open') && activeHamburger === hamburgerEl;
+    closeOverlay();
+    if (alreadyOpen) return;
+
+    if (MENUS[screen]) MENUS[screen]();
+    overlay.classList.add('open');
+    hamburgerEl.classList.add('open');
+    activeHamburger = hamburgerEl;
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove('open');
+    if (activeHamburger) { activeHamburger.classList.remove('open'); activeHamburger = null; }
+  }
+
+  overlayBackdrop.addEventListener('click', closeOverlay);
+
+  // Wire hamburgers
+  function toggleMobileMenu(screen) {
+    const btn = document.getElementById('hamburger-' + screen);
+    if (btn) openOverlay(screen, btn);
+  }
+  function closeMobileMenu() { closeOverlay(); }
+
+  // ── TILE CLICKS ──
   document.getElementById('tileProjects').addEventListener('click', () => {
     const sec = document.getElementById('projectsSection');
-    sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
-    sec.style.marginTop = '3rem';
-    if (sec.style.display === 'block') {
+    const isHidden = sec.style.display === 'none';
+    sec.style.display = isHidden ? 'block' : 'none';
+    if (isHidden) {
       setTimeout(() => {
-        const projectsSection = document.getElementById('projects');
-        if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const el = document.getElementById('projects');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 50);
     }
   });
 
   document.getElementById('tileHud').addEventListener('click', () => {
-    viewport.classList.remove('show-project');
+    closeOverlay();
+    viewport.classList.remove('show-project', 'show-tools');
     viewport.classList.add('show-hud');
     hudScreen.scrollTop = 0;
   });
 
   document.getElementById('tileTools').addEventListener('click', () => {
+    closeOverlay();
     viewport.classList.remove('show-project', 'show-hud');
     viewport.classList.add('show-tools');
     document.getElementById('tools-screen').scrollTop = 0;
   });
 
-  function goBackFromTools(scrollTo) {
-    viewport.classList.remove('show-tools');
-    if (scrollTo) {
-      setTimeout(() => {
-        const el = mainScreen.querySelector('#' + scrollTo);
-        if (el) {
-          const navHeight = document.getElementById('main-nav').offsetHeight;
-          mainScreen.scrollTop = el.offsetTop - navHeight;
-        }
-      }, 560);
-    } else {
-      setTimeout(() => { mainScreen.scrollTop = 0; }, 560);
-    }
+  // ── NAVIGATION BACK ──
+  function scrollMainTo(id) {
+    if (!id) { mainScreen.scrollTop = 0; return; }
+    setTimeout(() => {
+      const el = mainScreen.querySelector('#' + id);
+      if (el) {
+        const navHeight = 60;
+        mainScreen.scrollTop = el.offsetTop - navHeight;
+      }
+    }, 560);
   }
 
-  document.getElementById('toolsBackBtn').addEventListener('click', () => { goBackFromTools(); });
-  document.getElementById('toolsBackBtnAbout').addEventListener('click', () => { goBackFromTools('about'); });
-  document.getElementById('toolsBackBtnContact').addEventListener('click', () => { goBackFromTools('contact'); });
+  function goBack(scrollTo) {
+    closeOverlay();
+    viewport.classList.remove('show-project');
+    const vid = document.getElementById('pHeroVideo');
+    vid.pause(); vid.src = '';
+    scrollMainTo(scrollTo);
+  }
 
   function goBackFromHud(scrollTo) {
+    closeOverlay();
     viewport.classList.remove('show-hud');
-    if (scrollTo) {
-      setTimeout(() => {
-        const el = mainScreen.querySelector('#' + scrollTo);
-        if (el) {
-          const navHeight = document.getElementById('main-nav').offsetHeight;
-          mainScreen.scrollTop = el.offsetTop - navHeight;
-        }
-      }, 560);
-    } else {
-      setTimeout(() => { mainScreen.scrollTop = 0; }, 560);
-    }
+    scrollMainTo(scrollTo);
   }
 
-  document.getElementById('hudBackBtn').addEventListener('click', () => { viewport.classList.remove('show-hud'); setTimeout(() => { mainScreen.scrollTop = 0; }, 560); });
+  function goBackFromTools(scrollTo) {
+    closeOverlay();
+    viewport.classList.remove('show-tools');
+    scrollMainTo(scrollTo);
+  }
+
+  document.getElementById('backBtn').addEventListener('click', () => goBack());
+  document.getElementById('backBtnProjects').addEventListener('click', () => goBack('projects'));
+  document.getElementById('backBtnAbout').addEventListener('click',    () => goBack('about'));
+  document.getElementById('backBtnContact').addEventListener('click',  () => goBack('contact'));
+
+  document.getElementById('hudBackBtn').addEventListener('click', () => goBackFromHud());
   document.getElementById('hudBackBtnAbout').addEventListener('click',  () => goBackFromHud('about'));
   document.getElementById('hudBackBtnContact').addEventListener('click',() => goBackFromHud('contact'));
 
+  document.getElementById('toolsBackBtn').addEventListener('click', () => goBackFromTools());
+  document.getElementById('toolsBackBtnAbout').addEventListener('click', () => goBackFromTools('about'));
+  document.getElementById('toolsBackBtnContact').addEventListener('click', () => goBackFromTools('contact'));
+
+  // ── BUILD DEEP DIVE ──
   function buildDeepDive(blocks) {
     const container = document.getElementById('pDeepDiveBlocks');
     container.innerHTML = '';
@@ -1368,7 +1299,10 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
         <span class="dd-step">${block.step}</span>
         <div class="dd-title">${block.title}</div>
         <p class="dd-desc">${block.desc}</p>
-        ${hasVideo ? `<div class="dd-toggle-group"><button class="dd-toggle-btn active" onclick="setMediaMode('dd-media-${i}','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button><button class="dd-toggle-btn" onclick="setMediaMode('dd-media-${i}','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button></div>` : ''}
+        ${hasVideo ? `<div class="dd-toggle-group">
+          <button class="dd-toggle-btn active" onclick="setMediaMode('dd-media-${i}','image',this)"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg>Image</button>
+          <button class="dd-toggle-btn" onclick="setMediaMode('dd-media-${i}','video',this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Video</button>
+        </div>` : ''}
       `;
       const mediaDiv = document.createElement('div');
       mediaDiv.className = 'dd-media-panel';
@@ -1387,6 +1321,7 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     });
   }
 
+  // ── OPEN PROJECT ──
   function openProject(id) {
     const p = PROJECTS[id];
     if (!p) return;
@@ -1405,7 +1340,7 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     document.getElementById('pOverview').textContent = p.overview;
     document.getElementById('pRole').textContent = p.role;
     document.getElementById('pTech').textContent = p.tech;
-    document.getElementById('pTech').closest('.p-section').style.display = p.tech ? '' : 'none';
+    document.getElementById('pTechSection').style.display = p.tech ? '' : 'none';
     const chipsEl = document.getElementById('pChips');
     chipsEl.innerHTML = '';
     (p.chips || []).forEach(c => { const s = document.createElement('span'); s.className = 'chip'; s.textContent = c; chipsEl.appendChild(s); });
@@ -1419,58 +1354,47 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     if (p.deepDive && p.deepDive.length) { ddSection.style.display = ''; buildDeepDive(p.deepDive); }
     else { ddSection.style.display = 'none'; }
     projScreen.scrollTop = 0;
-    viewport.classList.remove('show-hud');
+    viewport.classList.remove('show-hud', 'show-tools');
     viewport.classList.add('show-project');
   }
 
-  function goBack(scrollTo) {
-    viewport.classList.remove('show-project');
-    const vid = document.getElementById('pHeroVideo');
-    vid.pause(); vid.src = '';
-    if (scrollTo) setTimeout(() => {
-      const el = mainScreen.querySelector('#' + scrollTo);
-      if (el) {
-        const navHeight = document.getElementById('main-nav').offsetHeight;
-        mainScreen.scrollTop = el.offsetTop - navHeight;
-      }
-    }, 560);
-  }
-
-  document.getElementById('backBtn').addEventListener('click', () => { goBack(); setTimeout(() => { mainScreen.scrollTop = 0; }, 560); });
-  document.getElementById('backBtnProjects').addEventListener('click', () => goBack('projects'));
-  document.getElementById('backBtnAbout').addEventListener('click',    () => goBack('about'));
-  document.getElementById('backBtnContact').addEventListener('click',  () => goBack('contact'));
+  // ── PROJECT CARD INTERACTIONS ──
+  // On mobile: single tap opens project. On desktop: hover expands, click opens.
+  const isMobile = () => window.innerWidth <= 700;
+  const grid = document.getElementById('projectsGrid');
 
   document.querySelectorAll('.project-card').forEach(card => {
     const video = card.querySelector('video');
-    card.addEventListener('mouseenter', () => { card.classList.add('expanded'); grid.classList.add('has-expanded'); if (video) video.play().catch(() => {}); });
-    card.addEventListener('mouseleave', () => { card.classList.remove('expanded'); grid.classList.remove('has-expanded'); if (video) { video.pause(); video.currentTime = 0; } });
+
+    card.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      card.classList.add('expanded');
+      grid.classList.add('has-expanded');
+      if (video) video.play().catch(() => {});
+    });
+    card.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      card.classList.remove('expanded');
+      grid.classList.remove('has-expanded');
+      if (video) { video.pause(); video.currentTime = 0; }
+    });
     card.addEventListener('click', () => openProject(parseInt(card.dataset.id)));
   });
 
-  const lightbox = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg');
+  // ── LIGHTBOX ──
+  const lightbox  = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lbImg');
   const lbCounter = document.getElementById('lbCounter');
   let lbShots = []; let lbIndex = 0;
 
- const HUD_SHOTS = [
-    'Images/HUD/Normal_view.png',
-    'Images/HUD/Edit_mode_view.png',
-    'Images/HUD/Editmode_Advanced_options.png',
-    'Images/HUD/Editmode_normal_options.png',
-    'Images/HUD/button_code.png',
-    'Images/HUD/Chose_spellPopup.png',
-    'Images/HUD/Spell_tooltip_popup.png',
-    'Images/HUD/ActionBar_editmode_popup.png',
+  const HUD_SHOTS = [
+    'Images/HUD/Normal_view.png','Images/HUD/Edit_mode_view.png',
+    'Images/HUD/Editmode_Advanced_options.png','Images/HUD/Editmode_normal_options.png',
+    'Images/HUD/button_code.png','Images/HUD/Chose_spellPopup.png',
+    'Images/HUD/Spell_tooltip_popup.png','Images/HUD/ActionBar_editmode_popup.png',
     'Images/HUD/Configurable_Snap-to-Grid_System_picture.png',
-    'Images/HUD/Grab-Point_picture.png',
-    'Images/HUD/Move_Propagates_picture.png',
-    'Images/HUD/Move_Propagates_to_All_Children.png',
-    'Images/HUD/Playerframe_editmode.png',
-    'Images/HUD/Targetframe_editmode.png',
-    'Images/HUD/Partyframes_editmode.png',
-    'Images/HUD/Drag_&_Drop_handling.png',
-    'Images/HUD/Grid_Snap_System.png'
+    'Images/HUD/Grab-Point_picture.png','Images/HUD/Move_Propagates_picture.png',
+    'Images/HUD/Drag_&_Drop_handling.png'
   ];
 
   function openLightbox(src, shots) {
@@ -1498,29 +1422,29 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
     if (e.key === 'ArrowRight') showLbSlide(lbIndex + 1);
   });
 
-  const TOOLS_SHOTS = [
-    'Images/Particles/particle_step1.png',
-    'Images/Particles/particle_step2.png',
-    'Images/Particles/particle_step3.png',
-    'Images/Particles/particle_step4.png',
-    'Images/Particles/particle_step5.png',
-    'Images/Particles/particle_overview.png'
-  ];
+  // Touch swipe on lightbox
+  let lbTouchX = null;
+  lightbox.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+  lightbox.addEventListener('touchend', e => {
+    if (lbTouchX === null) return;
+    const dx = e.changedTouches[0].clientX - lbTouchX;
+    if (Math.abs(dx) > 40) { dx < 0 ? showLbSlide(lbIndex + 1) : showLbSlide(lbIndex - 1); }
+    lbTouchX = null;
+  });
 
-  function openToolsLightbox(src) { openLightbox(src, TOOLS_SHOTS); }
-
-  const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
+  // ── FADE UP ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+  // ── SLIDESHOW ──
   const advImgs = ['Images/HUD/Editmode_Advanced_options.png','Images/HUD/Editmode_normal_options.png'];
   let advIndex = 0;
   setInterval(() => {
     advIndex = (advIndex + 1) % advImgs.length;
     const img = document.getElementById('advancedOptionsImg');
-    if (img) {
-      img.style.opacity = '0';
-      setTimeout(() => { img.src = advImgs[advIndex]; img.style.opacity = '1'; }, 300);
-    }
+    if (img) { img.style.opacity='0'; setTimeout(() => { img.src=advImgs[advIndex]; img.style.opacity='1'; }, 300); }
   }, 5000);
 
   const gameSlides = [
@@ -1534,11 +1458,20 @@ s.gridSize = std::<span class="tok-fn">round</span>(s.gridSize / <span class="to
   setInterval(() => {
     gameSlideIndex = (gameSlideIndex + 1) % gameSlides.length;
     const img = document.getElementById('gameSlideImg');
-    if (img) {
-      img.style.opacity = '0';
-      setTimeout(() => { img.src = gameSlides[gameSlideIndex]; img.style.opacity = '1'; }, 300);
-    }
+    if (img) { img.style.opacity='0'; setTimeout(() => { img.src=gameSlides[gameSlideIndex]; img.style.opacity='1'; }, 300); }
   }, 3000);
+
+  // ── SMOOTH NAV LINKS ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target && target.closest('#main-screen')) {
+        e.preventDefault();
+        const navH = 60;
+        mainScreen.scrollTop = target.offsetTop - navH;
+      }
+    });
+  });
 </script>
 </body>
 </html>
